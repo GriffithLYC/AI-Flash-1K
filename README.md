@@ -1,7 +1,7 @@
 <h1 align="center">AI Learning Cards</h1>
 
 <p align="center">
-  <b>AI大模型学习卡片</b> — 碎片化记忆工具，每天5分钟掌握一个AI核心概念
+  <b>AI大模型知识学习卡片</b> — 碎片化记忆工具，每天5分钟掌握一个AI核心概念
 </p>
 
 <p align="center">
