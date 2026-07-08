@@ -1,0 +1,1937 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIkFJIExlYXJuaW5nIENhcmRzIiwgInNob3J0X25hbWUiOiAiQUkgQ2FyZHMiLCAic3RhcnRfdXJsIjogIi4iLCAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwgImJhY2tncm91bmRfY29sb3IiOiAiIzBmMTcyYSIsICJ0aGVtZV9jb2xvciI6ICIjMGYxNzJhIiwgImljb25zIjogW3sic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTkyIDE5MiclM0UlM0NyZWN0IGZpbGw9JyUyMzBmMTcyYScgd2lkdGg9JzE5MicgaGVpZ2h0PScxOTInLyUzRSUzQ3RleHQgeD0nOTYnIHk9JzEyMCcgZm9udC1zaXplPSc4MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZmlsbD0nJTIzMzhiZGY4JyUzRVx1ZDgzZVx1ZGQxNiUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsICJzaXplcyI6ICIxOTJ4MTkyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCJ9XX0=">
+<title>AI Learning Cards</title>
+<style>
+:root {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface-light: #334155;
+  --primary: #38bdf8;
+  --primary-dark: #0ea5e9;
+  --text: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --success: #34d399;
+  --warning: #fbbf24;
+  --danger: #f87171;
+  --card-gradient-start: #1e293b;
+  --card-gradient-end: #0f172a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+#app-wrapper {
+  width: 100%;
+  height: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  position: relative;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.page {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: none;
+  padding: 16px;
+  padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+  -webkit-overflow-scrolling: touch;
+}
+
+.page.active { display: block; }
+
+/* Header */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.page-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+/* Progress */
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--surface-light);
+  border-radius: 2px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+/* Card Stack */
+.card-stack {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  margin-bottom: 16px;
+}
+
+.card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, var(--card-gradient-start), var(--card-gradient-end));
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+  display: flex;
+  flex-direction: column;
+  cursor: grab;
+  transition: transform 0.1s linear, opacity 0.2s ease;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.card:active { cursor: grabbing; }
+
+.card-category {
+  font-size: 11px;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.card-term {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+.card-def {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  flex: 1;
+  overflow: hidden;
+}
+
+.card-def-en {
+  margin-bottom: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-def-cn {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-hint {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.card-badge {
+  position: absolute;
+  top: 24px;
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+
+.badge-left {
+  left: 24px;
+  border: 2px solid var(--danger);
+  color: var(--danger);
+  transform: rotate(-12deg);
+}
+
+.badge-right {
+  right: 24px;
+  border: 2px solid var(--success);
+  color: var(--success);
+  transform: rotate(12deg);
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 420px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.empty-icon { font-size: 48px; margin-bottom: 12px; }
+.empty-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
+.empty-desc { font-size: 14px; color: var(--text-muted); }
+
+/* Detail Page */
+.detail-card {
+  background: linear-gradient(145deg, var(--card-gradient-start), var(--card-gradient-end));
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+  margin-bottom: 16px;
+}
+
+.detail-section {
+  margin-bottom: 20px;
+}
+
+.detail-section:last-child { margin-bottom: 0; }
+
+.detail-label {
+  font-size: 11px;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.detail-content {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.detail-content.term { font-size: 22px; font-weight: 700; color: var(--text); }
+
+.detail-actions {
+  display: flex;
+  gap: 12px;
+  position: sticky;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+}
+
+.btn {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.btn-review {
+  background: rgba(248, 113, 113, 0.15);
+  color: var(--danger);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+.btn-review:active { background: rgba(248, 113, 113, 0.3); }
+
+.btn-learned {
+  background: rgba(52, 211, 153, 0.15);
+  color: var(--success);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+}
+
+.btn-learned:active { background: rgba(52, 211, 153, 0.3); }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #0f172a;
+}
+
+.btn-primary:active { opacity: 0.85; }
+
+/* List Pages */
+.list-item {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+.list-item:active { background: var(--surface-light); }
+
+.list-status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-none { background: var(--text-muted); }
+.status-review { background: var(--warning); }
+.status-learned { background: var(--success); }
+
+.list-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.list-term {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.list-arrow {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tab {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.tab.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #0f172a;
+  font-weight: 600;
+}
+
+/* Stats */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 20px 12px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+.stat-number {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.stat-number.learned { color: var(--success); }
+.stat-number.review { color: var(--warning); }
+.stat-number.total { color: var(--primary); }
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Settings */
+.setting-item {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+.setting-item:active { background: var(--surface-light); }
+
+.setting-label {
+  font-size: 15px;
+  color: var(--text);
+}
+
+.setting-value {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* Bottom Nav */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 8px 0 calc(8px + env(safe-area-inset-bottom, 0px));
+  z-index: 100;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 0;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+.nav-item.active { color: var(--primary); }
+
+.nav-icon { font-size: 20px; line-height: 1; }
+.nav-label { font-size: 11px; font-weight: 500; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--surface-light); border-radius: 2px; }
+
+/* Animations */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page.active { animation: slideIn 0.25s ease; }
+
+@keyframes popIn {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.card-enter { animation: popIn 0.3s ease; }
+
+/* Category filter */
+.filter-chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  margin-bottom: 16px;
+  padding-bottom: 4px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.filter-chips::-webkit-scrollbar { display: none; }
+
+.chip {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.chip.active {
+  background: var(--primary);
+  color: #0f172a;
+  border-color: var(--primary);
+  font-weight: 600;
+}
+</style>
+</head>
+<body>
+
+<div id="app-wrapper">
+
+<!-- HOME PAGE -->
+<div id="home" class="page active">
+  <div class="page-header">
+    <div class="page-title">每日抽卡</div>
+  </div>
+  <div class="progress-text" id="progressText">准备中...</div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <div id="cardContainer">
+    <div class="card-stack" id="cardStack"></div>
+    <div class="card-hint" style="text-align:center;color:var(--text-muted);font-size:13px;margin-top:8px;">
+      ← 左滑：待复习 · 点击看详情 · 右滑：已学习 →
+    </div>
+  </div>
+  <div id="homeEmpty" class="empty-state" style="display:none;">
+    <div class="empty-icon">🎉</div>
+    <div class="empty-title">今日任务完成</div>
+    <div class="empty-desc">所有卡片已学习，明天再来吧</div>
+  </div>
+</div>
+
+<!-- DETAIL PAGE -->
+<div id="detail" class="page">
+  <div class="page-header">
+    <button class="back-btn" onclick="router.back()">← 返回</button>
+  </div>
+  <div id="detailContent"></div>
+  <div class="detail-actions">
+    <button class="btn btn-review" onclick="app.markFromDetail('review')">标记为待复习</button>
+    <button class="btn btn-learned" onclick="app.markFromDetail('learned')">标记为已学习</button>
+  </div>
+</div>
+
+<!-- REVIEW PAGE (with tabs for review/learned) -->
+<div id="review" class="page">
+  <div class="page-header">
+    <div class="page-title" id="reviewTitle">复习</div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="app.switchReviewTab('review')" id="tabReview">待复习</button>
+    <button class="tab" onclick="app.switchReviewTab('learned')" id="tabLearned">已学习</button>
+  </div>
+  <div id="reviewList"></div>
+  <div id="reviewEmpty" class="empty-state" style="display:none;height:auto;margin-top:40px;">
+    <div class="empty-icon">📭</div>
+    <div class="empty-title">暂无卡片</div>
+    <div class="empty-desc" id="reviewEmptyDesc">去首页抽卡学习吧</div>
+  </div>
+</div>
+
+<!-- LIBRARY PAGE -->
+<div id="library" class="page">
+  <div class="page-header">
+    <div class="page-title">词库</div>
+  </div>
+  <div class="filter-chips" id="filterChips">
+    <button class="chip active" onclick="app.filterCategory('all')">全部</button>
+    <button class="chip" onclick="app.filterCategory('基础概念')">基础概念</button>
+    <button class="chip" onclick="app.filterCategory('模型架构')">模型架构</button>
+    <button class="chip" onclick="app.filterCategory('训练技术')">训练技术</button>
+    <button class="chip" onclick="app.filterCategory('推理优化')">推理优化</button>
+    <button class="chip" onclick="app.filterCategory('应用落地')">应用落地</button>
+    <button class="chip" onclick="app.filterCategory('评估指标')">评估指标</button>
+    <button class="chip" onclick="app.filterCategory('数据工程')">数据工程</button>
+    <button class="chip" onclick="app.filterCategory('多模态')">多模态</button>
+    <button class="chip" onclick="app.filterCategory('安全对齐')">安全对齐</button>
+    <button class="chip" onclick="app.filterCategory('行业术语')">行业术语</button>
+  </div>
+  <div id="libraryList"></div>
+</div>
+
+<!-- STATS PAGE -->
+<div id="stats" class="page">
+  <div class="page-header">
+    <div class="page-title">统计</div>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number learned" id="statLearned">0</div>
+      <div class="stat-label">已掌握</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number review" id="statReview">0</div>
+      <div class="stat-label">待复习</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number total" id="statTotal">0</div>
+      <div class="stat-label">未学习</div>
+    </div>
+  </div>
+  <div style="background:var(--surface);border-radius:12px;padding:16px;margin-bottom:12px;">
+    <div style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">掌握进度</div>
+    <div class="progress-bar" style="margin-bottom:8px;"><div class="progress-fill" id="statProgress" style="width:0%"></div></div>
+    <div style="font-size:14px;color:var(--text-secondary);" id="statProgressText">0 / 100</div>
+  </div>
+  <div style="background:var(--surface);border-radius:12px;padding:16px;">
+    <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">分类统计</div>
+    <div id="categoryStats"></div>
+  </div>
+</div>
+
+<!-- SETTINGS PAGE -->
+<div id="settings" class="page">
+  <div class="page-header">
+    <div class="page-title">设置</div>
+  </div>
+  <div class="setting-item" onclick="app.resetDaily()">
+    <span class="setting-label">重置今日抽卡</span>
+    <span class="setting-value">重新抽取</span>
+  </div>
+  <div class="setting-item" onclick="app.clearAllData()">
+    <span class="setting-label">清除所有学习记录</span>
+    <span class="setting-value" style="color:var(--danger);">⚠️ 不可恢复</span>
+  </div>
+  <div style="margin-top:20px;padding:16px;background:var(--surface);border-radius:12px;">
+    <div style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">关于</div>
+    <div style="font-size:14px;color:var(--text-secondary);line-height:1.6;">
+      AI Learning Cards<br>
+      100个AI大模型核心术语<br>
+      单机离线版，数据保存在本地
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="nav-item active" data-target="home" onclick="router.go('home')">
+    <span class="nav-icon">🏠</span>
+    <span class="nav-label">首页</span>
+  </button>
+  <button class="nav-item" data-target="library" onclick="router.go('library')">
+    <span class="nav-icon">📚</span>
+    <span class="nav-label">词库</span>
+  </button>
+  <button class="nav-item" data-target="review" onclick="router.go('review')">
+    <span class="nav-icon">🔄</span>
+    <span class="nav-label">复习</span>
+  </button>
+  <button class="nav-item" data-target="stats" onclick="router.go('stats')">
+    <span class="nav-icon">📊</span>
+    <span class="nav-label">统计</span>
+  </button>
+  <button class="nav-item" data-target="settings" onclick="router.go('settings')">
+    <span class="nav-icon">⚙️</span>
+    <span class="nav-label">设置</span>
+  </button>
+</nav>
+
+</div><!-- /app-wrapper -->
+
+<script>
+// ==================== DATA ====================
+const CARDS = [
+  {
+    "term": "Large Language Model (LLM)",
+    "en_definition": "A type of AI model trained on massive amounts of text data to understand and generate human language. It can write essays, answer questions, and assist with coding by predicting the most likely next word in a sentence.",
+    "cn_definition": "一种在海量文本数据上训练的人工智能模型，能够理解和生成人类语言。它可以通过预测句子中最可能的下一个词来撰写文章、回答问题或辅助编程。",
+    "example": "When you ask ChatGPT to write a birthday poem, it uses an LLM to generate creative and coherent text based on patterns learned from billions of sentences. / 当你让ChatGPT写一首生日诗时，它利用大语言模型基于从数十亿句子中学到的模式生成有创意且连贯的文本。",
+    "category": "基础概念",
+    "id": 0
+  },
+  {
+    "term": "Prompt",
+    "en_definition": "The text instruction or question you give to an AI model to get a desired response. Crafting a good prompt is like asking a clear question - the better you phrase it, the better the answer you receive.",
+    "cn_definition": "你向AI模型发出的文本指令或问题，用以获得期望的回复。写好提示词就像提出一个清晰的问题——表达得越清楚，得到的回答就越好。",
+    "example": "Instead of saying 'Write something,' a better prompt is 'Write a 200-word product description for a wireless headphone targeting young professionals.' / 与其只说'写点东西'，更好的提示词是'为一款面向年轻职场人士的无线耳机撰写一段200字的产品描述'。",
+    "category": "基础概念",
+    "id": 1
+  },
+  {
+    "term": "Token",
+    "en_definition": "The basic unit of text that AI models process, which can be a word, part of a word, or even a single character. Models have a limit on how many tokens they can handle at once, similar to a page limit for an essay.",
+    "cn_definition": "AI模型处理文本的基本单位，可以是一个词、词的一部分，甚至单个字符。模型一次能处理的token数量有限，类似于作文的字数限制。",
+    "example": "The sentence 'Hello world' might be split into two tokens, while a complex word like 'unhappiness' could be split into 'un', 'happiness'. / 句子'Hello world'可能被分成两个token，而像'unhappiness'这样的复杂词可能被拆分为'un'和'happiness'。",
+    "category": "基础概念",
+    "id": 2
+  },
+  {
+    "term": "Embedding",
+    "en_definition": "A way to convert words or sentences into lists of numbers that capture their meaning. Similar words end up with similar number patterns, allowing AI to understand relationships between concepts mathematically.",
+    "cn_definition": "将词语或句子转换成数字列表的方法，这些数字能捕捉其含义。相似的词会有相似的数字模式，使AI能够通过数学方式理解概念之间的关系。",
+    "example": "In a recommendation system, the words 'king' and 'queen' have embeddings that are close to each other, just like 'man' and 'woman'. / 在推荐系统中，'king'和'queen'的嵌入向量彼此接近，就像'man'和'woman'一样。",
+    "category": "基础概念",
+    "id": 3
+  },
+  {
+    "term": "Attention Mechanism",
+    "en_definition": "A technique that helps AI models focus on the most relevant parts of input text when generating output. It works like a spotlight, shining brighter on important words and dimming less relevant ones.",
+    "cn_definition": "一种帮助AI模型在生成输出时聚焦于输入文本中最相关部分的技术。它就像一个聚光灯，对重要的词照得更亮，对不太相关的词则调暗。",
+    "example": "When translating 'The cat sat on the mat because it was tired,' attention helps the model connect 'it' to 'cat' rather than 'mat'. / 翻译'The cat sat on the mat because it was tired'时，注意力机制帮助模型将'it'与'cat'而非'mat'关联起来。",
+    "category": "基础概念",
+    "id": 4
+  },
+  {
+    "term": "Parameters",
+    "en_definition": "The internal adjustable values in a neural network that are learned during training. More parameters generally mean the model can store more knowledge, similar to how a bigger library holds more books.",
+    "cn_definition": "神经网络中在训练过程中学习的内部可调数值。更多的参数通常意味着模型能存储更多知识，就像更大的图书馆能容纳更多书籍一样。",
+    "example": "GPT-3 has 175 billion parameters, while GPT-4 is estimated to have over 1 trillion, allowing it to handle more complex tasks. / GPT-3有1750亿参数，而GPT-4估计超过1万亿参数，使其能处理更复杂的任务。",
+    "category": "基础概念",
+    "id": 5
+  },
+  {
+    "term": "Inference",
+    "en_definition": "The process of using a trained AI model to make predictions or generate responses on new data. It is the 'using' phase, as opposed to training which is the 'learning' phase.",
+    "cn_definition": "使用训练好的AI模型对新数据进行预测或生成回复的过程。这是'使用'阶段，与作为'学习'阶段的训练相对。",
+    "example": "When you type a message into a chatbot and it replies instantly, that real-time generation is inference happening on cloud servers. / 当你在聊天机器人中输入消息并立即获得回复时，这种实时生成就是云端服务器上正在进行的推理。",
+    "category": "基础概念",
+    "id": 6
+  },
+  {
+    "term": "Fine-tuning",
+    "en_definition": "The process of taking a pre-trained model and training it further on a smaller, specific dataset to adapt it for a particular task. It is like teaching a general doctor to become a specialist.",
+    "cn_definition": "在预训练模型的基础上，使用更小、更特定的数据集进一步训练，使其适应特定任务的过程。就像让全科医生进修成为专科医生。",
+    "example": "A company fine-tunes a general LLM on thousands of customer service conversations to create a chatbot that handles refund requests accurately. / 某公司在通用大模型基础上用数千条客服对话进行微调，打造出能准确处理退款请求的客服机器人。",
+    "category": "基础概念",
+    "id": 7
+  },
+  {
+    "term": "Hallucination",
+    "en_definition": "When an AI model generates confident-sounding but false or nonsensical information. It is like a student making up a convincing but entirely fictional answer on an exam.",
+    "cn_definition": "AI模型生成听起来很自信但实际上错误或荒谬的信息的现象。就像学生在考试中编造一个听起来可信但完全虚构的答案。",
+    "example": "A model might claim 'Albert Einstein won the Nobel Prize in Literature' when he actually won it in Physics. / 模型可能会声称'爱因斯坦获得了诺贝尔文学奖'，而他实际上获得的是物理学奖。",
+    "category": "基础概念",
+    "id": 8
+  },
+  {
+    "term": "Context Window",
+    "en_definition": "The maximum amount of text a model can consider at one time when generating a response. It is like the model's short-term memory - if the conversation gets too long, it may forget the beginning.",
+    "cn_definition": "模型在生成回复时一次能考虑的最大文本量。就像模型的短期记忆——如果对话太长，它可能会忘记开头的内容。",
+    "example": "If a model has a 4,000-token context window and you paste a 5,000-word legal contract, it cannot see the entire document at once. / 如果模型的上下文窗口是4000个token，而你粘贴了一份5000词的法律合同，它无法一次性看到整份文档。",
+    "category": "基础概念",
+    "id": 9
+  },
+  {
+    "term": "Transformer",
+    "en_definition": "A neural network architecture introduced in 2017 that revolutionized AI by processing entire sentences at once using attention mechanisms. It is the foundational design behind modern LLMs like GPT and BERT.",
+    "cn_definition": "2017年提出的一种神经网络架构，通过注意力机制一次性处理整句文本，彻底改变了AI领域。它是GPT和BERT等现代大语言模型的基础设计。",
+    "example": "Google Translate switched from sequential processing to Transformer-based models, dramatically improving translation quality and speed. / 谷歌翻译从顺序处理切换到基于Transformer的模型，翻译质量和速度大幅提升。",
+    "category": "模型架构",
+    "id": 10
+  },
+  {
+    "term": "GPT (Generative Pre-trained Transformer)",
+    "en_definition": "A family of decoder-only language models that generate text by predicting the next token. GPT models are trained to autocomplete sentences and can be adapted for chat, coding, and creative writing.",
+    "cn_definition": "一种仅使用解码器的语言模型家族，通过预测下一个token来生成文本。GPT模型被训练来自动补全句子，可适配用于聊天、编程和创意写作。",
+    "example": "ChatGPT uses a GPT-based architecture to hold natural conversations, write Python scripts, and summarize long articles. / ChatGPT使用基于GPT的架构进行自然对话、编写Python脚本和总结长文章。",
+    "category": "模型架构",
+    "id": 11
+  },
+  {
+    "term": "BERT (Bidirectional Encoder Representations from Transformers)",
+    "en_definition": "An encoder-only model that reads text in both directions to deeply understand context. It excels at classification tasks like sentiment analysis and named entity recognition rather than text generation.",
+    "cn_definition": "一种仅使用编码器的模型，双向阅读文本以深入理解上下文。它擅长情感分析、命名实体识别等分类任务，而非文本生成。",
+    "example": "Google Search uses BERT to better understand search queries like 'Can you get medicine for someone pharmacy' by reading the full context. / 谷歌搜索使用BERT来更好地理解像'Can you get medicine for someone pharmacy'这样的查询，通过阅读完整上下文来理解意图。",
+    "category": "模型架构",
+    "id": 12
+  },
+  {
+    "term": "Encoder-Decoder Architecture",
+    "en_definition": "A model design where the encoder compresses input text into a meaning representation, and the decoder expands it into output text. It is ideal for translation and summarization tasks.",
+    "cn_definition": "一种模型设计，编码器将输入文本压缩为语义表示，解码器将其扩展为输出文本。它非常适合翻译和摘要任务。",
+    "example": "In machine translation, the encoder reads a Chinese sentence, and the decoder generates the equivalent English sentence word by word. / 在机器翻译中，编码器读取中文句子，解码器逐词生成对应的英文句子。",
+    "category": "模型架构",
+    "id": 13
+  },
+  {
+    "term": "Mixture of Experts (MoE)",
+    "en_definition": "An architecture where a large model is divided into many specialized sub-models called 'experts,' and a gating network routes each input to only a few relevant experts. This allows massive scale without proportional compute cost.",
+    "cn_definition": "一种将大模型拆分为多个称为'专家'的专门子模型的架构，门控网络将每个输入仅路由给少数相关专家。这使得模型能在计算成本不成比例增长的情况下实现大规模扩展。",
+    "example": "Mixtral 8x7B uses 8 expert networks but only activates 2 per token, achieving performance comparable to a 70B model with much faster inference. / Mixtral 8x7B使用8个专家网络但每个token只激活2个，在推理速度快得多的情况下达到接近700亿参数模型的性能。",
+    "category": "模型架构",
+    "id": 14
+  },
+  {
+    "term": "Diffusion Model",
+    "en_definition": "A generative model that learns to create data by reversing a gradual noise-adding process. It starts with random static and progressively denoises it into a coherent image, audio clip, or video.",
+    "cn_definition": "一种生成模型，通过学习逆转逐步添加噪声的过程来创建数据。它从随机噪声开始，逐步去噪，最终生成连贯的图像、音频或视频。",
+    "example": "Midjourney and Stable Diffusion use diffusion models to turn text prompts like 'a cat wearing a spacesuit' into detailed images. / Midjourney和Stable Diffusion使用扩散模型将像'一只穿宇航服的猫'这样的文本提示转化为精细图像。",
+    "category": "模型架构",
+    "id": 15
+  },
+  {
+    "term": "Recurrent Neural Network (RNN)",
+    "en_definition": "An older neural network architecture that processes text sequentially, one word at a time, while maintaining a hidden state. It struggles with long sequences but laid groundwork for modern language models.",
+    "cn_definition": "一种较老的神经网络架构，按顺序逐词处理文本，同时维护一个隐藏状态。它在长序列上表现不佳，但为现代语言模型奠定了基础。",
+    "example": "Early smartphone keyboards used RNNs to predict the next word as you typed, though they often forgot context from earlier in the sentence. / 早期的智能手机键盘使用RNN在你输入时预测下一个词，但它们经常忘记句子开头的上下文。",
+    "category": "模型架构",
+    "id": 16
+  },
+  {
+    "term": "State Space Model (SSM)",
+    "en_definition": "A newer sequence modeling approach that efficiently captures long-range dependencies with linear computational complexity. Models like Mamba use SSMs to rival Transformers while handling much longer contexts.",
+    "cn_definition": "一种新型序列建模方法，以线性计算复杂度高效捕捉长距离依赖关系。Mamba等模型使用SSM来匹敌Transformer，同时能处理更长的上下文。",
+    "example": "Mamba can process DNA sequences or entire books in a single pass because its state space design scales linearly with sequence length. / Mamba可以一次性处理DNA序列或整本书，因为其状态空间设计与序列长度呈线性扩展关系。",
+    "category": "模型架构",
+    "id": 17
+  },
+  {
+    "term": "Vision Transformer (ViT)",
+    "en_definition": "An adaptation of the Transformer architecture for images by splitting them into patches and treating each patch like a word token. It enables powerful image understanding without traditional convolutional layers.",
+    "cn_definition": "将Transformer架构应用于图像的改进版本，将图像切分为小块并把每块当作词token处理。它无需传统卷积层即可实现强大的图像理解能力。",
+    "example": "ViT powers medical imaging systems to detect tumors from X-rays by analyzing image patches as sequential data. / ViT驱动医学影像系统通过将图像小块作为序列数据来分析，从而从X光片中检测肿瘤。",
+    "category": "模型架构",
+    "id": 18
+  },
+  {
+    "term": "RetNet (Retentive Network)",
+    "en_definition": "A Transformer alternative that replaces attention with a retention mechanism, offering parallel training like Transformers but with constant inference cost regardless of sequence length.",
+    "cn_definition": "一种Transformer的替代方案，用保留机制取代注意力机制，既像Transformer一样支持并行训练，又无论序列多长都保持恒定的推理成本。",
+    "example": "RetNet aims to deploy long-context language models on smartphones where memory and speed are severely limited. / RetNet旨在将长上下文语言模型部署到内存和速度都严重受限的智能手机上。",
+    "category": "模型架构",
+    "id": 19
+  },
+  {
+    "term": "Pre-training",
+    "en_definition": "The initial training phase where a model learns general language patterns from vast unlabeled text by predicting masked or next words. It is like teaching a child to speak by exposing them to endless conversations.",
+    "cn_definition": "初始训练阶段，模型通过预测被遮挡的词或下一个词，从海量无标注文本中学习通用语言模式。就像让孩子通过接触无尽的对话来学习说话。",
+    "example": "Before becoming a chatbot, a model is pre-trained on trillions of words from books, websites, and code repositories to learn grammar and facts. / 在成为聊天机器人之前，模型会在来自书籍、网站和代码库的数万亿词上进行预训练，学习语法和事实知识。",
+    "category": "训练技术",
+    "id": 20
+  },
+  {
+    "term": "Supervised Fine-Tuning (SFT)",
+    "en_definition": "Training a pre-trained model on human-curated input-output pairs to teach it specific behaviors. It is like giving a student textbooks with questions and correct answers to study from.",
+    "cn_definition": "在预训练模型基础上，使用人工整理好的输入-输出对进行训练，教会模型特定行为。就像给学生提供带有问题和正确答案的教科书来学习。",
+    "example": "OpenAI fine-tuned GPT-3 on thousands of high-quality question-answer dialogues to create the helpful conversational style of ChatGPT. / OpenAI在GPT-3基础上用数千条高质量问答对话进行微调，塑造了ChatGPT乐于助人的对话风格。",
+    "category": "训练技术",
+    "id": 21
+  },
+  {
+    "term": "RLHF (Reinforcement Learning from Human Feedback)",
+    "en_definition": "A technique where human preferences are used to train a reward model, which then guides the AI to produce more helpful and harmless responses through reinforcement learning.",
+    "cn_definition": "一种利用人类偏好训练奖励模型的技术，然后通过强化学习引导AI生成更有用、更无害的回复。",
+    "example": "Humans rank multiple AI responses from best to worst; this feedback trains the model to prefer polite, accurate answers over rude or incorrect ones. / 人类将多个AI回复从最好到最差排序；这种反馈训练模型更倾向于礼貌准确的回答，而非粗鲁或错误的回答。",
+    "category": "训练技术",
+    "id": 22
+  },
+  {
+    "term": "LoRA (Low-Rank Adaptation)",
+    "en_definition": "A parameter-efficient fine-tuning method that injects small, trainable matrices into a frozen pre-trained model. It allows customizing large models on modest hardware with minimal storage overhead.",
+    "cn_definition": "一种参数高效的微调方法，向冻结的预训练模型中注入小型可训练矩阵。它允许在普通硬件上定制大模型，且存储开销极小。",
+    "example": "A startup uses LoRA to adapt a 70B model to their legal domain by training only 0.1% of parameters, fitting the adapter on a single GPU. / 一家初创公司使用LoRA仅训练0.1%的参数，就在单张GPU上为70B模型适配了法律领域知识。",
+    "category": "训练技术",
+    "id": 23
+  },
+  {
+    "term": "Quantization-aware Training",
+    "en_definition": "Training a model while simulating low-precision arithmetic so it learns to perform well with fewer bits per parameter. This reduces model size and speeds up inference on specialized chips.",
+    "cn_definition": "在训练过程中模拟低精度运算，使模型学会在更少位数下保持良好性能。这能减小模型体积并加速专用芯片上的推理。",
+    "example": "A team trains a model with quantization awareness so it can run smoothly on mobile phones using 4-bit integers instead of 32-bit floats. / 某团队用量化感知训练模型，使其能使用4位整数而非32位浮点数在手机上流畅运行。",
+    "category": "训练技术",
+    "id": 24
+  },
+  {
+    "term": "Gradient Descent",
+    "en_definition": "The core optimization algorithm that gradually adjusts model parameters by moving in the direction that reduces prediction error. It is like a hiker always walking downhill to reach the lowest valley.",
+    "cn_definition": "核心的优化算法，通过朝减少预测误差的方向逐步调整模型参数。就像徒步者始终朝下坡走以到达最低的山谷。",
+    "example": "During training, if the model predicts 'cat' for a dog image, gradient descent tweaks internal weights to reduce this mistake over millions of examples. / 训练期间，如果模型将狗图像预测为'猫'，梯度下降会在数百万样本中调整内部权重以减少这种错误。",
+    "category": "训练技术",
+    "id": 25
+  },
+  {
+    "term": "Data Parallelism",
+    "en_definition": "A distributed training technique where the same model runs on multiple GPUs, each processing a different batch of data, and gradients are synchronized to update the model collectively.",
+    "cn_definition": "一种分布式训练技术，相同的模型在多个GPU上运行，每个GPU处理不同的数据批次，然后同步梯度以集体更新模型。",
+    "example": "Training GPT-4 required splitting data across thousands of GPUs, with each chip learning from different internet pages simultaneously. / 训练GPT-4需要将数据分散到数千个GPU上，每个芯片同时从不同的网页中学习。",
+    "category": "训练技术",
+    "id": 26
+  },
+  {
+    "term": "Curriculum Learning",
+    "en_definition": "A training strategy where models learn from easy examples first and gradually tackle harder ones. It mimics human education, starting with basic arithmetic before advancing to calculus.",
+    "cn_definition": "一种训练策略，模型先从简单样本学起，逐步攻克更难的内容。它模仿人类教育，从基础算术开始再进阶到微积分。",
+    "example": "A code-generation model is first trained on simple 'Hello World' programs before learning to build complex web applications. / 代码生成模型先训练简单的'Hello World'程序，然后再学习构建复杂的Web应用。",
+    "category": "训练技术",
+    "id": 27
+  },
+  {
+    "term": "Continual Learning",
+    "en_definition": "The ability of a model to learn new tasks over time without forgetting previously learned knowledge. It addresses the challenge of 'catastrophic forgetting' in AI systems.",
+    "cn_definition": "模型随时间学习新任务而不遗忘已有知识的能力。它解决了AI系统中'灾难性遗忘'的挑战。",
+    "example": "A virtual assistant learns a new language while retaining its ability to answer questions in languages it already knew. / 虚拟助手在学习一门新语言的同时，保留它已掌握语言的问答能力。",
+    "category": "训练技术",
+    "id": 28
+  },
+  {
+    "term": "KV Cache",
+    "en_definition": "A memory optimization technique that stores previously computed key and value tensors during text generation, avoiding redundant recalculation and dramatically speeding up long conversations.",
+    "cn_definition": "一种内存优化技术，在文本生成过程中存储之前计算过的键和值张量，避免重复计算，大幅加速长对话。",
+    "example": "Without KV cache, a chatbot would recalculate the entire conversation history for every new word; with it, only the new token is processed. / 没有KV缓存时，聊天机器人每生成一个新词都要重新计算整段对话历史；有了它，只需处理新token。",
+    "category": "推理优化",
+    "id": 29
+  },
+  {
+    "term": "Speculative Decoding",
+    "en_definition": "An inference acceleration method where a small, fast draft model guesses multiple future tokens, and a large model verifies them in parallel. Correct guesses are accepted, wrong ones are corrected.",
+    "cn_definition": "一种推理加速方法，小型的快速草稿模型猜测多个未来token，大模型并行验证。猜对的直接采用，猜错的再修正。",
+    "example": "A draft model predicts the next five words in a sentence; the main model checks all five at once, accepting four and rewriting one that does not fit. / 草稿模型预测句子接下来的五个词；主模型一次性检查五个，采纳四个并重写一个不合适的。",
+    "category": "推理优化",
+    "id": 30
+  },
+  {
+    "term": "Post-Training Quantization",
+    "en_definition": "Compressing a trained model by reducing the precision of its weights from 32-bit floats to 8-bit or 4-bit integers after training is complete. This shrinks model size with minimal quality loss.",
+    "cn_definition": "在训练完成后，将模型权重的精度从32位浮点数压缩到8位或4位整数。这能在质量损失极小的情况下大幅减小模型体积。",
+    "example": "A 13B model quantized to 4-bit can run on a laptop with 8GB RAM instead of requiring a server with 40GB VRAM. / 一个130亿参数的模型量化到4位后，可以在8GB内存的笔记本电脑上运行，而不需要40GB显存的服务器。",
+    "category": "推理优化",
+    "id": 31
+  },
+  {
+    "term": "Model Pruning",
+    "en_definition": "Removing unnecessary weights or neurons from a trained model to make it smaller and faster. It is like trimming dead branches from a tree so it grows more efficiently.",
+    "cn_definition": "从训练好的模型中移除不必要的权重或神经元，使其更小更快。就像修剪树上的枯枝，让它更高效地生长。",
+    "example": "A pruning algorithm identifies that 30% of a model's connections barely affect output and removes them, cutting inference time by 25%. / 剪枝算法识别出模型30%的连接对输出几乎没有影响并将其移除，推理时间减少25%。",
+    "category": "推理优化",
+    "id": 32
+  },
+  {
+    "term": "Knowledge Distillation",
+    "en_definition": "Training a small 'student' model to mimic the behavior of a large 'teacher' model. The student learns to approximate the teacher's outputs, achieving similar quality with far fewer parameters.",
+    "cn_definition": "训练一个小的'学生'模型来模仿大'教师'模型的行为。学生学习近似教师的输出，用更少的参数达到相似质量。",
+    "example": "Google distilled a massive BERT model into TinyBERT, which runs 10x faster on phones while retaining 96% of the original accuracy. / 谷歌将巨大的BERT模型蒸馏为TinyBERT，在手机上运行速度快10倍，同时保持96%的原始准确率。",
+    "category": "推理优化",
+    "id": 33
+  },
+  {
+    "term": "FlashAttention",
+    "en_definition": "An algorithm that reorganizes the attention computation to reduce memory reads and writes between GPU memory levels. It makes training and inference faster without changing model accuracy.",
+    "cn_definition": "一种重新组织注意力计算的算法，减少GPU不同内存层级之间的读写。它在不改变模型精度的情况下加速训练和推理。",
+    "example": "FlashAttention allows training models with longer context windows on the same GPU hardware by being smarter about how attention matrices are computed. / FlashAttention通过更智能地计算注意力矩阵，允许在相同GPU硬件上训练更长上下文窗口的模型。",
+    "category": "推理优化",
+    "id": 34
+  },
+  {
+    "term": "Beam Search",
+    "en_definition": "A decoding strategy that keeps track of multiple candidate sequences at each step and selects the most likely overall path. It balances exploration and quality better than greedy word-by-word choices.",
+    "cn_definition": "一种解码策略，在每一步跟踪多个候选序列，并选择整体上最可能的路径。它在探索性和质量之间取得了比逐词贪心选择更好的平衡。",
+    "example": "When translating a sentence, beam search considers several possible next phrases before committing, often producing more fluent results. / 翻译句子时，束搜索在确定前考虑几种可能的后续短语，通常能产生更流畅的结果。",
+    "category": "推理优化",
+    "id": 35
+  },
+  {
+    "term": "Temperature Sampling",
+    "en_definition": "A parameter controlling the randomness of AI text generation. Low temperature makes output focused and deterministic; high temperature makes it creative and unpredictable.",
+    "cn_definition": "控制AI文本生成随机性的参数。低温使输出集中且确定；高温使输出富有创意且不可预测。",
+    "example": "For factual Q&A, temperature is set to 0.1 for consistent answers; for poetry, it is raised to 0.9 for more imaginative verse. / 事实性问答设置温度为0.1以获得一致回答；写诗时提高到0.9以获得更有想象力的诗句。",
+    "category": "推理优化",
+    "id": 36
+  },
+  {
+    "term": "Top-p Sampling (Nucleus Sampling)",
+    "en_definition": "A sampling method that restricts token selection to the smallest set of most likely tokens whose combined probability exceeds a threshold p. It dynamically balances diversity and coherence.",
+    "cn_definition": "一种采样方法，将token选择限制在最可能token的最小集合中，使它们的累计概率超过阈值p。它动态地平衡多样性和连贯性。",
+    "example": "With top-p=0.9, the model only considers tokens that together make up 90% of the probability mass, filtering out bizarre outliers. / 当top-p=0.9时，模型只考虑累计占90%概率质量的token，过滤掉怪异的不相关词。",
+    "category": "推理优化",
+    "id": 37
+  },
+  {
+    "term": "Chatbot",
+    "en_definition": "An AI application designed to conduct text-based conversations with humans. Modern chatbots use LLMs to understand intent and generate natural, context-aware responses.",
+    "cn_definition": "一种旨在与人类进行文本对话的AI应用。现代聊天机器人使用大语言模型来理解意图并生成自然、上下文感知的回复。",
+    "example": "Duolingo's chatbot lets learners practice Spanish by having realistic conversations about ordering food at a restaurant. / Duolingo的聊天机器人让学习者通过与机器人进行餐厅点餐的真实对话来练习西班牙语。",
+    "category": "应用落地",
+    "id": 38
+  },
+  {
+    "term": "RAG (Retrieval-Augmented Generation)",
+    "en_definition": "A technique that enhances AI responses by first retrieving relevant documents from a knowledge base, then using them as context for generation. It grounds answers in factual sources.",
+    "cn_definition": "一种通过先从知识库中检索相关文档，再将其作为上下文用于生成来增强AI回复的技术。它将回答建立在事实来源之上。",
+    "example": "A company's internal assistant uses RAG to answer 'What is our refund policy?' by retrieving the latest HR document before generating the response. / 某公司内部助手使用RAG回答'我们的退款政策是什么？'，在生成回复前先检索最新的人力资源文档。",
+    "category": "应用落地",
+    "id": 39
+  },
+  {
+    "term": "Code Generation",
+    "en_definition": "The ability of AI models to write, complete, or debug software code in various programming languages based on natural language descriptions or partial code snippets.",
+    "cn_definition": "AI模型根据自然语言描述或部分代码片段，用多种编程语言编写、补全或调试软件代码的能力。",
+    "example": "A developer types 'function to sort a list of users by age in Python' and Copilot generates a working implementation instantly. / 开发者输入'用Python按年龄排序用户列表的函数'，Copilot立即生成可用的实现代码。",
+    "category": "应用落地",
+    "id": 40
+  },
+  {
+    "term": "Text Summarization",
+    "en_definition": "An NLP task where AI condenses long documents into shorter versions while preserving key information. It can be extractive (selecting sentences) or abstractive (rewriting in new words).",
+    "cn_definition": "一项自然语言处理任务，AI将长文档压缩为更短的版本同时保留关键信息。可以是抽取式（选择句子）或生成式（用新词重写）。",
+    "example": "A news app summarizes a 2,000-word investigative report into a 100-word briefing for busy readers during their commute. / 一款新闻应用将2000字的深度报道浓缩成100字的简报，供通勤中的忙碌读者阅读。",
+    "category": "应用落地",
+    "id": 41
+  },
+  {
+    "term": "Machine Translation",
+    "en_definition": "Automatically converting text from one language to another using AI. Modern neural translation systems capture nuance, idioms, and context far better than older rule-based systems.",
+    "cn_definition": "使用AI将文本自动从一种语言转换为另一种语言。现代神经翻译系统在捕捉细微差别、习语和上下文方面远优于旧的基于规则的系统。",
+    "example": "A traveler uses a translation app to convert a Japanese menu to English in real-time, including cultural notes about dishes. / 旅行者使用翻译应用将日文菜单实时翻译成英文，还包括菜品的文化注释。",
+    "category": "应用落地",
+    "id": 42
+  },
+  {
+    "term": "Sentiment Analysis",
+    "en_definition": "The process of determining the emotional tone behind a piece of text - whether it is positive, negative, or neutral. Businesses use it to monitor customer opinions at scale.",
+    "cn_definition": "判断一段文本背后情感基调的过程——是正面、负面还是中性。企业用它来大规模监测客户意见。",
+    "example": "A airline analyzes 50,000 tweets per day to detect passenger complaints early and respond to service issues proactively. / 一家航空公司每天分析5万条推文，及早发现乘客投诉并主动回应服务问题。",
+    "category": "应用落地",
+    "id": 43
+  },
+  {
+    "term": "Named Entity Recognition (NER)",
+    "en_definition": "Identifying and categorizing named items in text such as people, organizations, locations, and dates. It turns unstructured text into structured data for further analysis.",
+    "cn_definition": "识别和分类文本中的命名实体，如人名、组织、地点和日期。它将非结构化文本转化为结构化数据以供进一步分析。",
+    "example": "In the sentence 'Apple CEO Tim Cook visited Beijing on Monday,' NER tags Apple as Organization, Tim Cook as Person, Beijing as Location, and Monday as Date. / 在句子'苹果CEO蒂姆·库克周一访问北京'中，NER将Apple标记为组织，Tim Cook为人名，北京为地点，周一为日期。",
+    "category": "应用落地",
+    "id": 44
+  },
+  {
+    "term": "Question Answering (QA)",
+    "en_definition": "A system that automatically answers questions posed in natural language. Modern QA systems can read documents and provide precise answers rather than just returning search results.",
+    "cn_definition": "一种自动回答自然语言提问的系统。现代问答系统可以阅读文档并提供精确答案，而不仅仅是返回搜索结果。",
+    "example": "A medical QA system reads a patient's symptoms and research papers to suggest possible diagnoses for doctors to consider. / 医疗问答系统阅读患者症状和研究论文，为医生提出可能的诊断建议供参考。",
+    "category": "应用落地",
+    "id": 45
+  },
+  {
+    "term": "AI Agent",
+    "en_definition": "An autonomous system that uses LLMs to perceive its environment, make decisions, and take actions to achieve goals. Agents can use tools, browse the web, and execute multi-step plans.",
+    "cn_definition": "一种使用大语言模型感知环境、做出决策并采取行动以实现目标的自主系统。智能体可以使用工具、浏览网页并执行多步骤计划。",
+    "example": "An AI agent receives the goal 'Book a flight to Tokyo under $800 for next week,' then searches travel sites, compares prices, and reserves the best option. / AI智能体接到'预订下周去东京800美元以下的机票'的目标后，搜索旅游网站、比较价格并预订最佳选项。",
+    "category": "应用落地",
+    "id": 46
+  },
+  {
+    "term": "Perplexity",
+    "en_definition": "A metric measuring how well a language model predicts a sample of text. Lower perplexity means the model is less 'surprised' by the text, indicating better understanding of language patterns.",
+    "cn_definition": "衡量语言模型预测文本样本能力的指标。困惑度越低，说明模型对文本越不'惊讶'，表明对语言模式的理解越好。",
+    "example": "A model with perplexity of 20 is more uncertain about next words than one with perplexity of 8, which predicts text more confidently. / 困惑度为20的模型比困惑度为8的模型对下一个词更不确定，后者预测文本更自信。",
+    "category": "评估指标",
+    "id": 47
+  },
+  {
+    "term": "BLEU Score",
+    "en_definition": "An algorithm for evaluating the quality of machine-generated text by comparing it to human-written reference translations. It counts matching word sequences to score similarity.",
+    "cn_definition": "通过将机器生成文本与人工撰写的参考译文进行比较来评估生成质量的算法。它统计匹配的词语序列来给相似度打分。",
+    "example": "A translation model outputs 'The cat is on the mat' while the reference is 'The cat sits on the mat'; BLEU gives partial credit for the overlapping words. / 翻译模型输出'The cat is on the mat'，参考译文是'The cat sits on the mat'；BLEU对重叠词语给予部分分数。",
+    "category": "评估指标",
+    "id": 48
+  },
+  {
+    "term": "ROUGE Score",
+    "en_definition": "A set of metrics for evaluating automatic summarization by measuring overlap of words and phrases between generated summaries and human references. It focuses on recall.",
+    "cn_definition": "一组通过测量生成摘要与人工参考之间词语和短语重叠来评估自动摘要的指标。它侧重于召回率。",
+    "example": "If a human summary mentions 'climate change, carbon emissions, and renewable energy,' ROUGE checks how many of these key phrases the AI summary included. / 如果人工摘要提到'气候变化、碳排放和可再生能源'，ROUGE检查AI摘要包含了多少这些关键短语。",
+    "category": "评估指标",
+    "id": 49
+  },
+  {
+    "term": "Exact Match (EM)",
+    "en_definition": "A strict evaluation metric where the model's output must exactly match the correct answer, character for character. It is commonly used in reading comprehension benchmarks.",
+    "cn_definition": "一种严格的评估指标，要求模型输出必须与正确答案完全一致，逐字匹配。常用于阅读理解基准测试。",
+    "example": "For the question 'Who wrote Romeo and Juliet?' only 'William Shakespeare' scores an exact match; 'Shakespeare' or 'W. Shakespeare' would fail. / 对于问题'谁写了《罗密欧与朱丽叶》？'，只有'William Shakespeare'能得满分；'Shakespeare'或'W. Shakespeare'都不通过。",
+    "category": "评估指标",
+    "id": 50
+  },
+  {
+    "term": "F1 Score",
+    "en_definition": "The harmonic mean of precision and recall, providing a balanced measure of a model's accuracy. It is useful when you want to balance avoiding false positives and catching all true positives.",
+    "cn_definition": "精确率和召回率的调和平均数，提供模型准确率的平衡度量。当你想平衡避免误报和抓住所有真正例时非常有用。",
+    "example": "In spam detection, F1 score balances catching all spam (recall) while not marking legitimate emails as spam (precision). / 在垃圾邮件检测中，F1分数平衡了抓住所有垃圾邮件（召回率）和不错将正常邮件标记为垃圾邮件（精确率）。",
+    "category": "评估指标",
+    "id": 51
+  },
+  {
+    "term": "MMLU (Massive Multitask Language Understanding)",
+    "en_definition": "A popular benchmark testing AI knowledge across 57 subjects including math, history, law, and medicine. It measures how much world knowledge and reasoning ability a model has acquired.",
+    "cn_definition": "一个流行的基准测试，涵盖数学、历史、法律和医学等57个学科，测试AI的知识水平。它衡量模型获得了多少世界知识和推理能力。",
+    "example": "A model scoring 90% on MMLU demonstrates broad expertise comparable to a well-educated human across diverse academic fields. / 在MMLU上得分90%的模型展现出与受过良好教育的人类相当的跨学科广泛专业知识。",
+    "category": "评估指标",
+    "id": 52
+  },
+  {
+    "term": "HumanEval",
+    "en_definition": "A benchmark for evaluating code generation models by testing whether generated Python functions pass a set of unit tests. It measures practical programming ability rather than just syntax correctness.",
+    "cn_definition": "通过测试生成的Python函数是否能通过一组单元测试来评估代码生成模型的基准。它衡量实际编程能力而非仅语法正确性。",
+    "example": "HumanEval asks a model to write a function that reverses a string and then checks if the output passes hidden test cases. / HumanEval要求模型编写一个反转字符串的函数，然后检查输出是否通过隐藏的测试用例。",
+    "category": "评估指标",
+    "id": 53
+  },
+  {
+    "term": "Pass@k",
+    "en_definition": "A code evaluation metric measuring the probability that at least one out of k generated code samples passes all tests. It acknowledges that models may need multiple attempts to solve a problem.",
+    "cn_definition": "一种代码评估指标，衡量k个生成的代码样本中至少有一个通过所有测试的概率。它承认模型可能需要多次尝试才能解决问题。",
+    "example": "Pass@100 of 85% means if the model generates 100 solutions, at least one will be correct 85% of the time. / Pass@100为85%意味着如果模型生成100个解决方案，至少有一个是正确的概率为85%。",
+    "category": "评估指标",
+    "id": 54
+  },
+  {
+    "term": "BLEURT",
+    "en_definition": "A learned metric that uses a pre-trained model to judge text quality by comparing generated text to references. It captures semantic similarity better than simple word-matching scores.",
+    "cn_definition": "一种基于学习的指标，使用预训练模型通过比较生成文本与参考文本来评判文本质量。它比简单的词语匹配分数更能捕捉语义相似性。",
+    "example": "BLEURT recognizes that 'The movie was fantastic' and 'The film was amazing' are semantically similar, even though they share few identical words. / BLEURT能识别出'The movie was fantastic'和'The film was amazing'语义相似，尽管它们几乎无相同的词。",
+    "category": "评估指标",
+    "id": 55
+  },
+  {
+    "term": "Tokenization",
+    "en_definition": "The process of breaking raw text into tokens that a model can process. Different tokenizers produce different splits - some use words, others use subword pieces to handle rare words efficiently.",
+    "cn_definition": "将原始文本切分为模型可处理的token的过程。不同的分词器产生不同的切分结果——有些用词，有些用子词片段来高效处理罕见词。",
+    "example": "The Byte-Pair Encoding tokenizer splits 'unbelievable' into 'un', 'believ', 'able', allowing the model to understand it from known parts. / 字节对编码分词器将'unbelievable'切分为'un'、'believ'、'able'，让模型从已知部分理解它。",
+    "category": "数据工程",
+    "id": 56
+  },
+  {
+    "term": "Data Cleaning",
+    "en_definition": "The process of removing corrupted, duplicate, low-quality, or toxic content from training datasets. Clean data is essential for training models that produce safe and reliable outputs.",
+    "cn_definition": "从训练数据集中移除损坏、重复、低质量或有害内容的过程。干净的数据对于训练出安全可靠的模型至关重要。",
+    "example": "Before training, a team filters out web pages containing hate speech, personal information, and nonsensical machine-generated spam. / 训练前，团队过滤掉包含仇恨言论、个人信息和无意义机器生成垃圾内容的网页。",
+    "category": "数据工程",
+    "id": 57
+  },
+  {
+    "term": "Data Augmentation",
+    "en_definition": "Creating additional training examples by modifying existing data through techniques like paraphrasing, synonym replacement, or back-translation. It helps models generalize better.",
+    "cn_definition": "通过改写、同义词替换或回译等技术修改现有数据来创建额外训练样本。它帮助模型更好地泛化。",
+    "example": "To improve a sentiment classifier, a sentence 'This product is great' is augmented with 'This item is excellent' and 'I love this product.' / 为了改进情感分类器，将句子'This product is great'增强为'This item is excellent'和'I love this product.'。",
+    "category": "数据工程",
+    "id": 58
+  },
+  {
+    "term": "Synthetic Data",
+    "en_definition": "Artificially generated data created by AI models or simulations rather than collected from the real world. It is used to supplement scarce or sensitive training data.",
+    "cn_definition": "由AI模型或模拟生成而非从现实世界收集的人工数据。用于补充稀缺或敏感的训练数据。",
+    "example": "A hospital uses a language model to generate synthetic patient records for training diagnostic AI without exposing real patient privacy. / 一家医院使用语言模型生成合成病历，用于训练诊断AI，同时不暴露真实患者隐私。",
+    "category": "数据工程",
+    "id": 59
+  },
+  {
+    "term": "Data Pipeline",
+    "en_definition": "An automated sequence of steps that moves raw data through collection, cleaning, transformation, and loading into training systems. It ensures models are fed fresh, high-quality data.",
+    "cn_definition": "将原始数据通过收集、清洗、转换并加载到训练系统的自动化步骤序列。它确保模型获得新鲜、高质量的数据。",
+    "example": "A pipeline fetches new Wikipedia articles nightly, deduplicates them, filters for quality, tokenizes the text, and packages batches for training. / 数据管道每夜获取新维基百科文章，去重、过滤质量、分词，然后将批次打包用于训练。",
+    "category": "数据工程",
+    "id": 60
+  },
+  {
+    "term": "Web Crawling",
+    "en_definition": "The automated process of browsing and downloading content from the internet to build training datasets. Crawlers follow links across millions of pages to gather text, images, and documents.",
+    "cn_definition": "自动浏览和下载互联网内容以构建训练数据集的过程。爬虫沿着链接遍历数百万页面来收集文本、图像和文档。",
+    "example": "Common Crawl is a nonprofit project that periodically scans the entire web, producing petabytes of raw data for AI researchers. / Common Crawl是一个非营利项目，定期扫描整个网络，为AI研究人员提供PB级的原始数据。",
+    "category": "数据工程",
+    "id": 61
+  },
+  {
+    "term": "Deduplication",
+    "en_definition": "Removing duplicate or near-duplicate content from datasets to prevent models from over-memorizing repeated text. It improves diversity and reduces storage waste.",
+    "cn_definition": "从数据集中移除重复或近似重复的内容，防止模型过度记忆重复文本。它提高多样性并减少存储浪费。",
+    "example": "A dataset might contain the same news article 50 times from different aggregators; deduplication keeps just one copy. / 一个数据集可能从不同的聚合网站包含同一篇新闻文章50次；去重只保留一份。",
+    "category": "数据工程",
+    "id": 62
+  },
+  {
+    "term": "Quality Filtering",
+    "en_definition": "Applying heuristics or classifiers to remove low-quality training examples such as spam, garbled text, or pages with excessive ads. It improves model performance by raising the signal-to-noise ratio.",
+    "cn_definition": "应用启发式规则或分类器移除低质量训练样本，如垃圾内容、乱码文本或广告过多的页面。通过提高信噪比来改善模型性能。",
+    "example": "Filters remove web pages where 90% of content is navigation menus and ads, keeping only articles with substantial paragraphs. / 过滤掉90%内容是导航菜单和广告的网页，只保留有实质段落的 article。",
+    "category": "数据工程",
+    "id": 63
+  },
+  {
+    "term": "Instruction Tuning Dataset",
+    "en_definition": "A curated collection of task descriptions paired with correct responses, used to teach models to follow user instructions. These datasets transform base models into helpful assistants.",
+    "cn_definition": "由任务描述与正确回复配对组成的精选集合，用于教会模型遵循用户指令。这些数据集将基础模型转变为有用的助手。",
+    "example": "An entry might read: 'Instruction: Summarize this article in 3 sentences. Input: [article]. Output: [summary].' / 一个条目可能是：'指令：用3句话总结这篇文章。输入：[文章]。输出：[摘要]。'",
+    "category": "数据工程",
+    "id": 64
+  },
+  {
+    "term": "Multimodal LLM",
+    "en_definition": "A large language model that can process and generate multiple types of data - text, images, audio, and video - within a single system. It understands relationships between different modalities.",
+    "cn_definition": "能够在单一系统中处理并生成多种数据类型——文本、图像、音频和视频——的大语言模型。它理解不同模态之间的关系。",
+    "example": "A user uploads a photo of a broken bicycle and asks 'How do I fix this?' The model sees the image and provides step-by-step repair instructions in text. / 用户上传一张坏自行车的照片并问'怎么修？'，模型看到图像后提供文字形式的逐步维修指导。",
+    "category": "多模态",
+    "id": 65
+  },
+  {
+    "term": "CLIP (Contrastive Language-Image Pre-training)",
+    "en_definition": "A model trained to understand the relationship between images and text by learning which captions match which pictures. It enables searching images with text queries and classifying images without labeled training data.",
+    "cn_definition": "通过学习目标标题与图片的匹配关系来理解图像和文本之间联系的模型。它允许用文本查询搜索图像，以及在没有标注训练数据的情况下对图像分类。",
+    "example": "CLIP can find all 'red sports cars' in a photo library without ever being explicitly trained on that specific category. / CLIP可以在照片库中找到所有'红色跑车'，而无需针对该特定类别进行显式训练。",
+    "category": "多模态",
+    "id": 66
+  },
+  {
+    "term": "Text-to-Image Generation",
+    "en_definition": "The task of creating images from textual descriptions using generative AI. Models like DALL-E and Stable Diffusion translate language into visual representations.",
+    "cn_definition": "使用生成式AI根据文本描述创建图像的任务。DALL-E和Stable Diffusion等模型将语言转化为视觉表现。",
+    "example": "A designer types 'a futuristic city at sunset with flying cars' and receives four unique AI-generated concept art images in seconds. / 设计师输入'日落时的未来城市，有飞行汽车'，几秒钟内收到四张独特的AI生成概念艺术图。",
+    "category": "多模态",
+    "id": 67
+  },
+  {
+    "term": "Automatic Speech Recognition (ASR)",
+    "en_definition": "Technology that converts spoken language into written text. Modern ASR systems use deep learning to handle accents, background noise, and multiple speakers.",
+    "cn_definition": "将口语转换为书面文本的技术。现代ASR系统使用深度学习来处理口音、背景噪音和多人说话场景。",
+    "example": "When you dictate a message to your phone, ASR transcribes your voice into text with 95%+ accuracy in real-time. / 当你向手机口述消息时，ASR将你的语音实时转录为文字，准确率达95%以上。",
+    "category": "多模态",
+    "id": 68
+  },
+  {
+    "term": "OCR (Optical Character Recognition)",
+    "en_definition": "Technology that extracts text from images and scanned documents. Modern OCR systems can handle handwritten notes, curved text, and multiple languages in a single image.",
+    "cn_definition": "从图像和扫描文档中提取文本的技术。现代OCR系统可以处理手写笔记、弯曲文字以及单张图像中的多种语言。",
+    "example": "You photograph a paper receipt and an OCR app extracts all item names and prices into a spreadsheet automatically. / 你拍摄纸质收据，OCR应用自动将所有商品名称和价格提取到电子表格中。",
+    "category": "多模态",
+    "id": 69
+  },
+  {
+    "term": "Video Understanding",
+    "en_definition": "The ability of AI to analyze video content by understanding both visual frames and temporal sequences. It enables tasks like action recognition, video captioning, and highlight detection.",
+    "cn_definition": "AI通过理解视觉帧和时间序列来分析视频内容的能力。它支持动作识别、视频描述和精彩瞬间检测等任务。",
+    "example": "A sports platform automatically generates highlight reels by identifying exciting moments like goals and slam dunks from hours of footage. / 体育平台通过从数小时 footage 中识别进球和扣篮等激动人心时刻，自动生成精彩集锦。",
+    "category": "多模态",
+    "id": 70
+  },
+  {
+    "term": "Image Captioning",
+    "en_definition": "Automatically generating descriptive sentences for images. Models analyze visual content and produce human-like descriptions that capture objects, actions, and relationships.",
+    "cn_definition": "为图像自动生成描述性句子的技术。模型分析视觉内容并生成捕捉物体、动作和关系的人类式描述。",
+    "example": "An image captioning model describes a photo as 'A golden retriever playing fetch in a sunny park with a red frisbee.' / 图像描述模型将一张照片描述为'一只金毛寻回犬在阳光明媚的公园里玩红色飞盘'。",
+    "category": "多模态",
+    "id": 71
+  },
+  {
+    "term": "Cross-modal Retrieval",
+    "en_definition": "Searching for content across different data types - finding images with text queries, audio with images, or videos with descriptions. It bridges the gap between modalities.",
+    "cn_definition": "跨不同数据类型搜索内容——用文本查询找图像、用图像找音频、或用描述找视频。它桥接了不同模态之间的鸿沟。",
+    "example": "A user hums a melody and the system retrieves the song name, lyrics, and related music videos from a database. / 用户哼唱一段旋律，系统从数据库中检索出歌曲名称、歌词和相关MV。",
+    "category": "多模态",
+    "id": 72
+  },
+  {
+    "term": "Audio Language Model",
+    "en_definition": "A model trained directly on raw audio waveforms or spectrograms to understand and generate speech, music, or sound effects without relying on text intermediates.",
+    "cn_definition": "直接在原始音频波形或频谱图上训练，以理解和生成语音、音乐或音效的模型，无需依赖文本作为中间媒介。",
+    "example": "An audio LM generates realistic podcast narration with proper emotion and intonation from a simple script outline. / 音频语言模型根据简单的脚本大纲生成带有恰当情感和语调的逼真播客旁白。",
+    "category": "多模态",
+    "id": 73
+  },
+  {
+    "term": "AI Alignment",
+    "en_definition": "The field of ensuring AI systems act in accordance with human values and intentions. It addresses the challenge of making powerful models helpful, honest, and harmless.",
+    "cn_definition": "确保AI系统按照人类价值观和意图行事的领域。它解决了让强大模型变得有用、诚实且无害的挑战。",
+    "example": "Alignment research explores how to prevent a powerful AI from interpreting 'maximize paperclip production' by converting all matter into paperclips. / 对齐研究探索如何防止强大AI将'最大化回形针产量'理解为将所有物质都变成回形针。",
+    "category": "安全对齐",
+    "id": 74
+  },
+  {
+    "term": "Constitutional AI",
+    "en_definition": "A training approach where models are guided by a set of written principles or a 'constitution' to self-critique and revise harmful outputs. It reduces reliance on human labels for safety.",
+    "cn_definition": "一种训练方法，模型受一套书面原则或'宪法'指导，自我批评并修正有害输出。它减少了对人工标注在安全方面的依赖。",
+    "example": "Anthropic's Claude uses a constitution with principles like 'choose the response that is most respectful' to filter its own answers. / Anthropic的Claude使用包含'选择最尊重人的回复'等原则的宪法来过滤自己的回答。",
+    "category": "安全对齐",
+    "id": 75
+  },
+  {
+    "term": "Red Teaming",
+    "en_definition": "The practice of deliberately trying to break, trick, or elicit harmful behavior from AI models before deployment. It is like ethical hacking but for AI safety.",
+    "cn_definition": "在部署前故意尝试破坏、欺骗或诱导AI模型产生有害行为的做法。就像针对AI安全的道德黑客攻击。",
+    "example": "Safety experts spend weeks attempting jailbreaks, bias injection, and misinformation prompts to find weaknesses in a new chatbot. / 安全专家花费数周尝试越狱、注入偏见和虚假信息提示，以发现新聊天机器人的弱点。",
+    "category": "安全对齐",
+    "id": 76
+  },
+  {
+    "term": "Adversarial Attack",
+    "en_definition": "Input modifications designed to fool AI models into making wrong predictions while appearing normal to humans. A tiny, invisible change to an image can make a classifier misidentify it.",
+    "cn_definition": "旨在欺骗AI模型做出错误预测但对人类看起来正常的输入修改。对图像进行微小、不可见的改动就能让分类器误识别。",
+    "example": "Adding subtle noise to a panda image makes an AI classifier confidently label it as a gibbon, though humans see no difference. / 向熊猫图像添加细微噪声后，AI分类器自信地将其标记为长臂猿，而人类看不出任何差别。",
+    "category": "安全对齐",
+    "id": 77
+  },
+  {
+    "term": "Jailbreak",
+    "en_definition": "Crafting prompts that bypass an AI's safety guardrails to make it produce content it was trained to refuse, such as instructions for illegal activities or hate speech.",
+    "cn_definition": "精心设计提示词以绕过AI的安全护栏，使其生成它被训练拒绝的内容，如非法活动指导或仇恨言论。",
+    "example": "A jailbreak might frame a harmful request as a fictional screenplay or encode it in base64 to trick content filters. / 越狱攻击可能将有害请求包装成虚构电影剧本，或用base64编码来欺骗内容过滤器。",
+    "category": "安全对齐",
+    "id": 78
+  },
+  {
+    "term": "Bias Mitigation",
+    "en_definition": "Techniques to reduce unfair prejudices in AI outputs, such as gender stereotypes or racial discrimination learned from training data. It aims for equitable treatment across groups.",
+    "cn_definition": "减少AI输出中不公平偏见的技术，如从训练数据中学到的性别刻板印象或种族歧视。它追求对不同群体的公平对待。",
+    "example": "If a résumé screening model favors male candidates, bias mitigation retrains it on balanced data and adds fairness constraints. / 如果简历筛选模型偏袒男性候选人，偏见缓解措施会在平衡数据上重新训练并添加公平性约束。",
+    "category": "安全对齐",
+    "id": 79
+  },
+  {
+    "term": "Privacy-Preserving AI",
+    "en_definition": "Methods that train or deploy AI without exposing sensitive personal data. Techniques include federated learning, differential privacy, and on-device inference.",
+    "cn_definition": "在不暴露敏感个人数据的情况下训练或部署AI的方法。技术包括联邦学习、差分隐私和端侧推理。",
+    "example": "Your smartphone keyboard learns your typing style through federated learning without ever sending your actual messages to a central server. / 你的智能手机键盘通过联邦学习了解你的打字习惯，而无需将实际消息发送到中央服务器。",
+    "category": "安全对齐",
+    "id": 80
+  },
+  {
+    "term": "Model Interpretability",
+    "en_definition": "The study of understanding why AI models make specific decisions. It seeks to open the 'black box' and explain model behavior in human-understandable terms.",
+    "cn_definition": "研究理解AI模型为何做出特定决策的学科。它试图打开'黑箱'，用人类可理解的方式解释模型行为。",
+    "example": "Visualization tools show that a model classifies 'doctor' images by focusing on white coats and stethoscopes rather than faces. / 可视化工具显示，模型通过关注白大褂和听诊器而非面部来分类'医生'图像。",
+    "category": "安全对齐",
+    "id": 81
+  },
+  {
+    "term": "Toxicity Detection",
+    "en_definition": "Systems that identify harmful content such as hate speech, harassment, or threats in generated or user-submitted text. They act as content moderation filters.",
+    "cn_definition": "识别生成文本或用户提交文本中有害内容（如仇恨言论、骚扰或威胁）的系统。它们充当内容审核过滤器。",
+    "example": "A gaming platform uses toxicity detection to automatically mute players sending racist or sexist messages in chat. / 游戏平台使用毒性检测自动禁言在聊天中发送种族歧视或性别歧视消息的玩家。",
+    "category": "安全对齐",
+    "id": 82
+  },
+  {
+    "term": "Value Alignment",
+    "en_definition": "Ensuring an AI system's goals and behaviors match the values of its users and society. It goes beyond safety to encompass fairness, transparency, and respect for human autonomy.",
+    "cn_definition": "确保AI系统的目标和行为与其使用者及社会的价值观一致。它超越安全性，涵盖公平性、透明度和对人类自主权的尊重。",
+    "example": "A medical AI aligns with the value of patient autonomy by presenting treatment options with pros and cons rather than making decisions for patients. / 医疗AI通过呈现治疗方案的利弊而非替患者做决定，来与患者自主权这一价值观对齐。",
+    "category": "安全对齐",
+    "id": 83
+  },
+  {
+    "term": "Foundation Model",
+    "en_definition": "A large AI model trained on broad data that can be adapted to many downstream tasks. It serves as a general-purpose base that developers specialize for specific applications.",
+    "cn_definition": "在广泛数据上训练的大型AI模型，可适配到多种下游任务。它是通用基础，开发者可将其专门化用于特定应用。",
+    "example": "GPT-4 is a foundation model that powers everything from chatbots to coding assistants through fine-tuning and prompting. / GPT-4是一个基础模型，通过微调和提示工程驱动从聊天机器人到编程助手等各种应用。",
+    "category": "行业术语",
+    "id": 84
+  },
+  {
+    "term": "AGI (Artificial General Intelligence)",
+    "en_definition": "Hypothetical AI that possesses human-like general intelligence across any intellectual task. Unlike current narrow AI, AGI could learn, reason, and solve problems in any domain.",
+    "cn_definition": "假设中的AI，在任何智力任务上拥有类似人类的通用智能。与当前的专用AI不同，AGI可以在任何领域学习、推理和解决问题。",
+    "example": "While today's AI masters chess or translation separately, AGI would simultaneously excel at scientific research, creative writing, and social negotiation. / 当今AI分别精通国际象棋或翻译，而AGI将同时在科学研究、创意写作和社交谈判上表现出色。",
+    "category": "行业术语",
+    "id": 85
+  },
+  {
+    "term": "Emergent Ability",
+    "en_definition": "Capabilities that appear in large AI models but are absent in smaller versions, emerging unpredictably as scale increases. They are not explicitly programmed but arise from complexity.",
+    "cn_definition": "在大型AI模型中出现但小型版本不具备的能力，随规模增加不可预测地涌现。它们没有被显式编程，而是从复杂性中产生的。",
+    "example": "Chain-of-thought reasoning - explaining step-by-step logic - suddenly appears when models exceed ~100 billion parameters. / 思维链推理——逐步解释逻辑——在模型超过约1000亿参数时突然出现。",
+    "category": "行业术语",
+    "id": 86
+  },
+  {
+    "term": "Scaling Law",
+    "en_definition": "Observed mathematical relationships showing how model performance predictably improves with more parameters, data, and compute. They guide decisions about resource allocation.",
+    "cn_definition": "观察到的数学关系，显示模型性能如何随更多参数、数据和算力而可预测地提升。它们指导资源分配的决策。",
+    "example": "Scaling laws suggest that doubling model size requires roughly doubling training data to avoid underfitting, guiding trillion-parameter training plans. / 扩展定律表明，将模型规模翻倍大约需要翻倍训练数据以避免欠拟合，这指导了万亿参数训练计划的制定。",
+    "category": "行业术语",
+    "id": 87
+  },
+  {
+    "term": "Compute-Optimal Training",
+    "en_definition": "Training models with the ideal balance of model size and data volume for a given compute budget. It avoids the inefficiency of making models too large or training them too briefly.",
+    "cn_definition": "在给定算力预算下，使模型规模与数据量达到理想平衡的训练方式。它避免了模型过大或训练过短的低效做法。",
+    "example": "Chinchilla showed that a 70B model trained on 1.4 trillion tokens outperforms a 280B model trained on 300 billion tokens at the same compute cost. / Chinchilla研究表明，在相同计算成本下，用1.4万亿token训练的700亿参数模型优于用3000亿token训练的2800亿参数模型。",
+    "category": "行业术语",
+    "id": 88
+  },
+  {
+    "term": "Inference Cost",
+    "en_definition": "The computational and financial expense of running a trained model to generate responses. It is a major business consideration for deploying AI at scale.",
+    "cn_definition": "运行训练好的模型以生成回复的计算和财务开销。它是大规模部署AI时的主要商业考量。",
+    "example": "A company might choose a smaller model despite lower accuracy because serving 10 million users daily with a massive model would cost $500,000 per day. / 某公司可能选择较小的模型，尽管准确率略低，因为每天用超大模型服务1000万用户将花费50万美元。",
+    "category": "行业术语",
+    "id": 89
+  },
+  {
+    "term": "Token Economy",
+    "en_definition": "The commercial model where AI services charge based on the number of tokens processed. Users pay for both input prompts and generated outputs, making long conversations expensive.",
+    "cn_definition": "AI服务按处理的token数量收费的商业模式。用户为输入提示和生成输出都付费，使长对话成本较高。",
+    "example": "An API might charge $0.01 per 1,000 input tokens and $0.03 per 1,000 output tokens, so a 500-word response costs about half a cent. / 某API可能对每1000个输入token收费0.01美元，每1000个输出token收费0.03美元，因此500词的回复约花费半美分。",
+    "category": "行业术语",
+    "id": 90
+  },
+  {
+    "term": "Model-as-a-Service (MaaS)",
+    "en_definition": "Cloud-based platforms that provide AI models via APIs, allowing developers to integrate powerful AI without building or hosting models themselves.",
+    "cn_definition": "通过API提供AI模型的云平台，让开发者无需自建或自托管模型就能集成强大的AI能力。",
+    "example": "A startup integrates GPT-4 through an API to add AI writing assistance to their app without hiring ML engineers or buying GPUs. / 一家初创公司通过API接入GPT-4，为应用添加AI写作辅助功能，而无需招聘ML工程师或购买GPU。",
+    "category": "行业术语",
+    "id": 91
+  },
+  {
+    "term": "Prompt Engineer",
+    "en_definition": "A specialist who crafts effective inputs to elicit optimal outputs from AI models. They design templates, experiment with phrasing, and build prompt libraries for organizations.",
+    "cn_definition": "专门设计有效输入以从AI模型获得最佳输出的专家。他们设计模板、试验措辞，并为组织构建提示词库。",
+    "example": "A prompt engineer discovers that adding 'Explain like I am five' consistently improves the clarity of complex topic explanations from an LLM. / 提示工程师发现添加'用五岁小孩能懂的方式解释'能持续提升大模型对复杂话题解释的清晰度。",
+    "category": "行业术语",
+    "id": 92
+  },
+  {
+    "term": "AI Governance",
+    "en_definition": "The frameworks, policies, and regulations that guide the ethical development and deployment of AI. It involves governments, companies, and civil society working together.",
+    "cn_definition": "指导AI伦理开发和部署的框架、政策和法规。它涉及政府、企业和民间社会的协同合作。",
+    "example": "The EU AI Act classifies AI systems by risk level, banning certain uses like social scoring while requiring transparency for chatbots. / 欧盟AI法案按风险等级对AI系统分类，禁止社会评分等特定用途，同时要求聊天机器人具备透明度。",
+    "category": "行业术语",
+    "id": 93
+  },
+  {
+    "term": "Text-to-Speech (TTS)",
+    "en_definition": "Technology that converts written text into natural-sounding spoken audio. Modern TTS systems use deep learning to produce expressive, human-like voices with proper intonation and rhythm.",
+    "cn_definition": "将书面文本转换为自然语音音频的技术。现代TTS系统使用深度学习生成富有表现力、类似人声的发音，具备恰当的语调和节奏。",
+    "example": "An audiobook platform uses TTS to instantly turn any e-book into a narrated audio version in the user's preferred voice style. / 有声书平台使用TTS将任何电子书即时转换为旁白音频版本，且可选择用户偏好的声音风格。",
+    "category": "多模态",
+    "id": 94
+  },
+  {
+    "term": "Content Moderation",
+    "en_definition": "The automated or human review of user-generated content to enforce community guidelines. AI models classify posts, comments, and images to flag or remove harmful material at scale.",
+    "cn_definition": "对用户生成内容进行自动或人工审核以执行社区规范。AI模型对帖子、评论和图像进行分类，大规模标记或移除有害内容。",
+    "example": "A social network uses AI moderation to detect and remove bullying comments within seconds of posting, protecting millions of teenage users daily. / 某社交网络使用AI审核在欺凌评论发布数秒内检测并删除，每天保护数百万青少年用户。",
+    "category": "应用落地",
+    "id": 95
+  },
+  {
+    "term": "Dynamic Batching",
+    "en_definition": "An inference optimization technique that groups multiple requests together dynamically at runtime to maximize GPU utilization. It improves throughput without increasing latency for individual users.",
+    "cn_definition": "一种推理优化技术，在运行时将多个请求动态组合在一起以最大化GPU利用率。它在不增加单个用户延迟的情况下提高吞吐量。",
+    "example": "Instead of processing one chat query at a time, a server waits a few milliseconds to collect 8 requests and processes them simultaneously on the GPU. / 服务器不再一次处理一个聊天查询，而是等待几毫秒收集8个请求，然后在GPU上同时处理。",
+    "category": "推理优化",
+    "id": 96
+  },
+  {
+    "term": "Data Annotation",
+    "en_definition": "The process of adding labels, tags, or explanations to raw data to make it useful for training supervised models. It includes tasks like labeling images, transcribing audio, and rating responses.",
+    "cn_definition": "向原始数据添加标签、标记或解释，使其可用于监督模型训练的过程。包括图像标注、音频转录和回复评分等任务。",
+    "example": "Thousands of annotators label traffic images with bounding boxes around cars and pedestrians to train self-driving car perception systems. / 数千名标注员用边界框标记交通图像中的汽车和行人，以训练自动驾驶汽车的感知系统。",
+    "category": "数据工程",
+    "id": 97
+  },
+  {
+    "term": "Learning Rate Scheduling",
+    "en_definition": "Adjusting the step size of gradient descent during training - starting large for fast progress and gradually shrinking for fine convergence. It is like slowing down as you approach your destination.",
+    "cn_definition": "在训练过程中调整梯度下降的步长——开始时较大以快速进步，逐渐缩小以精细收敛。就像接近目的地时减速一样。",
+    "example": "A model starts training with a learning rate of 0.001, then reduces it by 10x halfway through to settle precisely into the optimal weights. / 模型以0.001的学习率开始训练，中途降低10倍，以精确 settle 到最优权重。",
+    "category": "训练技术",
+    "id": 98
+  },
+  {
+    "term": "BERTScore",
+    "en_definition": "An evaluation metric that compares generated text to references using contextual embeddings rather than exact word matches. It captures semantic similarity even when wording differs completely.",
+    "cn_definition": "一种使用上下文嵌入而非精确词语匹配来比较生成文本与参考文本的评估指标。即使措辞完全不同，它也能捕捉语义相似性。",
+    "example": "BERTScore recognizes 'The meal was delicious' and 'The food tasted wonderful' as highly similar, while BLEU would give them a low score. / BERTScore识别'The meal was delicious'和'The food tasted wonderful'高度相似，而BLEU会给它们低分。",
+    "category": "评估指标",
+    "id": 99
+  }
+];
+
+// ==================== STORAGE ====================
+const Storage = {
+  key: 'ai-learning-cards-v1',
+  get() {
+    try {
+      const raw = localStorage.getItem(this.key);
+      return raw ? JSON.parse(raw) : { records: {}, lastDrawDate: null, todayCards: [], currentIndex: 0 };
+    } catch (e) { return { records: {}, lastDrawDate: null, todayCards: [], currentIndex: 0 }; }
+  },
+  set(data) {
+    localStorage.setItem(this.key, JSON.stringify(data));
+  },
+  clear() {
+    localStorage.removeItem(this.key);
+  }
+};
+
+// ==================== ROUTER ====================
+const router = {
+  history: [],
+  go(page) {
+    this.history.push(page);
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(page).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.target === page));
+    if (page === 'library') app.renderLibrary();
+    if (page === 'review') app.renderReviewList();
+    if (page === 'stats') app.renderStats();
+  },
+  back() {
+    this.history.pop();
+    const prev = this.history.length ? this.history[this.history.length - 1] : 'home';
+    this.go(prev);
+  },
+  init() {
+    this.history = ['home'];
+  }
+};
+
+// ==================== APP ====================
+const app = {
+  state: null,
+  currentCardId: null,
+  reviewTab: 'review',
+  libraryFilter: 'all',
+
+  init() {
+    this.state = Storage.get();
+    this.checkDailyReset();
+    this.drawDailyCards();
+    this.renderHome();
+    router.init();
+  },
+
+  checkDailyReset() {
+    const today = new Date().toDateString();
+    if (this.state.lastDrawDate !== today) {
+      this.state.lastDrawDate = today;
+      this.state.todayCards = [];
+      this.state.currentIndex = 0;
+      this.drawDailyCards();
+      Storage.set(this.state);
+    }
+  },
+
+  drawDailyCards() {
+    if (this.state.todayCards.length > 0) return;
+    const pool = CARDS.filter(c => {
+      const st = this.state.records[c.id];
+      return st !== 'learned';
+    }).map(c => c.id);
+    // Shuffle
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    this.state.todayCards = pool.slice(0, 5);
+    this.state.currentIndex = 0;
+    Storage.set(this.state);
+  },
+
+  getStatus(id) {
+    return this.state.records[id] || 'none';
+  },
+
+  setStatus(id, status) {
+    this.state.records[id] = status;
+    Storage.set(this.state);
+  },
+
+  renderHome() {
+    const container = document.getElementById('cardStack');
+    const empty = document.getElementById('homeEmpty');
+    const cardContainer = document.getElementById('cardContainer');
+    const progressText = document.getElementById('progressText');
+    const progressFill = document.getElementById('progressFill');
+
+    const remaining = this.state.todayCards.slice(this.state.currentIndex);
+    const total = this.state.todayCards.length;
+    const done = this.state.currentIndex;
+
+    progressText.textContent = total > 0 ? `${done}/${total}` : '今日完成';
+    progressFill.style.width = total > 0 ? `${(done/total)*100}%` : '100%';
+
+    if (remaining.length === 0) {
+      container.innerHTML = '';
+      empty.style.display = 'flex';
+      cardContainer.style.display = 'none';
+      return;
+    }
+
+    empty.style.display = 'none';
+    cardContainer.style.display = 'block';
+
+    // Render top 2 cards for stack effect
+    container.innerHTML = '';
+    remaining.slice(0, 2).reverse().forEach((id, idx) => {
+      const card = CARDS.find(c => c.id === id);
+      const el = document.createElement('div');
+      el.className = 'card' + (idx === 0 ? ' card-enter' : '');
+      el.dataset.id = card.id;
+      el.innerHTML = `
+        <div class="card-category">${card.category}</div>
+        <div class="card-term">${this.escapeHtml(card.term)}</div>
+        <div class="card-def">
+          <div class="card-def-en">${this.escapeHtml(card.en_definition)}</div>
+          <div class="card-def-cn">${this.escapeHtml(card.cn_definition)}</div>
+        </div>
+        <div class="card-hint">点击查看详情</div>
+        <div class="card-badge badge-left">待复习</div>
+        <div class="card-badge badge-right">已学习</div>
+      `;
+      el.addEventListener('click', () => {
+        if (el.dataset.noclick) { delete el.dataset.noclick; return; }
+        this.openDetail(card.id);
+      });
+      this.attachSwipe(el, card.id);
+      container.appendChild(el);
+    });
+  },
+
+  attachSwipe(el, cardId) {
+    let startX = 0, startY = 0, currentX = 0, currentY = 0, isDragging = false;
+
+    el.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      isDragging = true;
+      el.style.transition = 'none';
+      delete el.dataset.noclick;
+    }, { passive: true });
+
+    el.addEventListener('touchmove', e => {
+      if (!isDragging) return;
+      currentX = e.touches[0].clientX - startX;
+      currentY = e.touches[0].clientY - startY;
+      if (Math.abs(currentX) > Math.abs(currentY)) {
+        el.style.transform = `translateX(${currentX}px) rotate(${currentX * 0.05}deg)`;
+        const badgeLeft = el.querySelector('.badge-left');
+        const badgeRight = el.querySelector('.badge-right');
+        if (badgeLeft) badgeLeft.style.opacity = currentX < -40 ? Math.min(1, Math.abs(currentX) / 100) : 0;
+        if (badgeRight) badgeRight.style.opacity = currentX > 40 ? Math.min(1, currentX / 100) : 0;
+      }
+    }, { passive: true });
+
+    el.addEventListener('touchend', e => {
+      if (!isDragging) return;
+      isDragging = false;
+      el.style.transition = 'transform 0.3s ease, opacity 0.2s ease';
+
+      if (currentX < -60) {
+        el.dataset.noclick = 'true';
+        el.style.transform = `translateX(-120%) rotate(-20deg)`;
+        el.style.opacity = '0';
+        setTimeout(() => this.handleSwipe(cardId, 'review'), 200);
+      } else if (currentX > 60) {
+        el.dataset.noclick = 'true';
+        el.style.transform = `translateX(120%) rotate(20deg)`;
+        el.style.opacity = '0';
+        setTimeout(() => this.handleSwipe(cardId, 'learned'), 200);
+      } else {
+        el.style.transform = '';
+        el.querySelector('.badge-left').style.opacity = 0;
+        el.querySelector('.badge-right').style.opacity = 0;
+      }
+      currentX = 0;
+    });
+
+    // Mouse support for desktop
+    el.addEventListener('mousedown', e => {
+      startX = e.clientX;
+      startY = e.clientY;
+      isDragging = true;
+      el.style.transition = 'none';
+      delete el.dataset.noclick;
+    });
+
+    el.addEventListener('mousemove', e => {
+      if (!isDragging) return;
+      currentX = e.clientX - startX;
+      currentY = e.clientY - startY;
+      if (Math.abs(currentX) > Math.abs(currentY)) {
+        el.style.transform = `translateX(${currentX}px) rotate(${currentX * 0.05}deg)`;
+        const badgeLeft = el.querySelector('.badge-left');
+        const badgeRight = el.querySelector('.badge-right');
+        if (badgeLeft) badgeLeft.style.opacity = currentX < -40 ? Math.min(1, Math.abs(currentX) / 100) : 0;
+        if (badgeRight) badgeRight.style.opacity = currentX > 40 ? Math.min(1, currentX / 100) : 0;
+      }
+    });
+
+    el.addEventListener('mouseup', e => {
+      if (!isDragging) return;
+      isDragging = false;
+      el.style.transition = 'transform 0.3s ease, opacity 0.2s ease';
+      if (currentX < -60) {
+        el.dataset.noclick = 'true';
+        el.style.transform = `translateX(-120%) rotate(-20deg)`;
+        el.style.opacity = '0';
+        setTimeout(() => this.handleSwipe(cardId, 'review'), 200);
+      } else if (currentX > 60) {
+        el.dataset.noclick = 'true';
+        el.style.transform = `translateX(120%) rotate(20deg)`;
+        el.style.opacity = '0';
+        setTimeout(() => this.handleSwipe(cardId, 'learned'), 200);
+      } else {
+        el.style.transform = '';
+        el.querySelector('.badge-left').style.opacity = 0;
+        el.querySelector('.badge-right').style.opacity = 0;
+      }
+      currentX = 0;
+    });
+
+    el.addEventListener('mouseleave', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      el.style.transition = 'transform 0.3s ease';
+      el.style.transform = '';
+      el.querySelector('.badge-left').style.opacity = 0;
+      el.querySelector('.badge-right').style.opacity = 0;
+      currentX = 0;
+    });
+  },
+
+  handleSwipe(cardId, status) {
+    this.setStatus(cardId, status);
+    this.state.currentIndex++;
+    Storage.set(this.state);
+    this.renderHome();
+  },
+
+  openDetail(cardId) {
+    this.currentCardId = cardId;
+    const card = CARDS.find(c => c.id === cardId);
+    const el = document.getElementById('detailContent');
+    el.innerHTML = `
+      <div class="detail-card">
+        <div class="detail-section">
+          <div class="detail-label">分类</div>
+          <div class="detail-content">${card.category}</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">术语</div>
+          <div class="detail-content term">${this.escapeHtml(card.term)}</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">英文定义</div>
+          <div class="detail-content">${this.escapeHtml(card.en_definition)}</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">中文定义</div>
+          <div class="detail-content">${this.escapeHtml(card.cn_definition)}</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">案例</div>
+          <div class="detail-content">${this.escapeHtml(card.example)}</div>
+        </div>
+      </div>
+    `;
+    router.go('detail');
+  },
+
+  markFromDetail(status) {
+    if (this.currentCardId == null) return;
+    this.setStatus(this.currentCardId, status);
+    // Remove from today's cards if present and not yet processed
+    const idx = this.state.todayCards.indexOf(this.currentCardId);
+    if (idx !== -1 && idx >= this.state.currentIndex) {
+      this.state.todayCards.splice(idx, 1);
+      Storage.set(this.state);
+    }
+    router.back();
+    this.renderHome();
+  },
+
+  switchReviewTab(tab) {
+    this.reviewTab = tab;
+    document.getElementById('tabReview').classList.toggle('active', tab === 'review');
+    document.getElementById('tabLearned').classList.toggle('active', tab === 'learned');
+    this.renderReviewList();
+  },
+
+  renderReviewList() {
+    const list = document.getElementById('reviewList');
+    const empty = document.getElementById('reviewEmpty');
+    const emptyDesc = document.getElementById('reviewEmptyDesc');
+
+    const ids = Object.entries(this.state.records)
+      .filter(([_, s]) => s === this.reviewTab)
+      .map(([id, _]) => parseInt(id));
+
+    if (ids.length === 0) {
+      list.innerHTML = '';
+      empty.style.display = 'flex';
+      emptyDesc.textContent = this.reviewTab === 'review' ? '去首页抽卡学习吧' : '还没有已学习的卡片';
+      return;
+    }
+
+    empty.style.display = 'none';
+    list.innerHTML = ids.map(id => {
+      const card = CARDS.find(c => c.id === id);
+      return `
+        <div class="list-item" onclick="app.openDetail(${card.id})">
+          <div class="list-status status-${this.reviewTab}"></div>
+          <div class="list-info">
+            <div class="list-term">${this.escapeHtml(card.term)}</div>
+            <div class="list-meta">${card.category}</div>
+          </div>
+          <div class="list-arrow">›</div>
+        </div>
+      `;
+    }).join('');
+  },
+
+  renderLibrary() {
+    const list = document.getElementById('libraryList');
+    let cards = CARDS;
+    if (this.libraryFilter !== 'all') {
+      cards = cards.filter(c => c.category === this.libraryFilter);
+    }
+    list.innerHTML = cards.map(card => {
+      const status = this.getStatus(card.id);
+      const statusClass = status === 'learned' ? 'status-learned' : status === 'review' ? 'status-review' : 'status-none';
+      return `
+        <div class="list-item" onclick="app.openDetail(${card.id})">
+          <div class="list-status ${statusClass}"></div>
+          <div class="list-info">
+            <div class="list-term">${this.escapeHtml(card.term)}</div>
+            <div class="list-meta">${card.category} · ${status === 'learned' ? '已学' : status === 'review' ? '复习' : '未学'}</div>
+          </div>
+          <div class="list-arrow">›</div>
+        </div>
+      `;
+    }).join('');
+  },
+
+  filterCategory(cat) {
+    this.libraryFilter = cat;
+    document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.textContent === (cat === 'all' ? '全部' : cat)));
+    this.renderLibrary();
+  },
+
+  renderStats() {
+    let learned = 0, review = 0, none = 0;
+    CARDS.forEach(c => {
+      const s = this.getStatus(c.id);
+      if (s === 'learned') learned++;
+      else if (s === 'review') review++;
+      else none++;
+    });
+
+    document.getElementById('statLearned').textContent = learned;
+    document.getElementById('statReview').textContent = review;
+    document.getElementById('statTotal').textContent = none;
+    document.getElementById('statProgress').style.width = `${((learned + review) / CARDS.length) * 100}%`;
+    document.getElementById('statProgressText').textContent = `${learned + review} / ${CARDS.length}`;
+
+    // Category stats
+    const cats = {};
+    CARDS.forEach(c => {
+      if (!cats[c.category]) cats[c.category] = { total: 0, learned: 0 };
+      cats[c.category].total++;
+      if (this.getStatus(c.id) === 'learned') cats[c.category].learned++;
+    });
+
+    const catEl = document.getElementById('categoryStats');
+    catEl.innerHTML = Object.entries(cats).map(([name, data]) => {
+      const pct = Math.round((data.learned / data.total) * 100);
+      return `
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+          <span style="font-size:14px;color:var(--text-secondary);">${name}</span>
+          <span style="font-size:13px;color:var(--text-muted);">${data.learned}/${data.total} (${pct}%)</span>
+        </div>
+        <div class="progress-bar" style="margin-bottom:14px;height:6px;"><div class="progress-fill" style="width:${pct}%"></div></div>
+      `;
+    }).join('');
+  },
+
+  resetDaily() {
+    if (!confirm('确定要重新抽取今日卡片吗？')) return;
+    this.state.todayCards = [];
+    this.state.currentIndex = 0;
+    this.drawDailyCards();
+    Storage.set(this.state);
+    this.renderHome();
+    if (document.getElementById('home').classList.contains('active')) return;
+    router.go('home');
+  },
+
+  clearAllData() {
+    if (!confirm('确定要清除所有学习记录吗？此操作不可恢复。')) return;
+    Storage.clear();
+    this.state = { records: {}, lastDrawDate: null, todayCards: [], currentIndex: 0 };
+    this.drawDailyCards();
+    this.renderHome();
+    router.go('home');
+  },
+
+  escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+};
+
+// ==================== INIT ====================
+document.addEventListener('DOMContentLoaded', () => {
+  app.init();
+});
+
+// ==================== SERVICE WORKER (Inline via Blob) ====================
+if ('serviceWorker' in navigator) {
+  const swCode = `
+    self.addEventListener('install', e => {
+      self.skipWaiting();
+    });
+    self.addEventListener('activate', e => {
+      e.waitUntil(self.clients.claim());
+    });
+    self.addEventListener('fetch', e => {
+      e.respondWith(fetch(e.request).catch(() => new Response('Offline')));
+    });
+  `;
+  const blob = new Blob([swCode], { type: 'application/javascript' });
+  const swUrl = URL.createObjectURL(blob);
+  navigator.serviceWorker.register(swUrl).catch(() => {});
+}
+</script>
+
+</body>
+</html>
