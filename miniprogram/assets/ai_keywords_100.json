@@ -1,0 +1,1002 @@
+[
+  {
+    "id": "kw_001",
+    "term": "Large Language Model",
+    "abbr": "LLM",
+    "phonetic": "/lɑːrdʒ ˈlæŋɡwɪdʒ ˈmɒdl/",
+    "translation": "大语言模型",
+    "category": "基础概念",
+    "definition": "基于深度学习技术训练的大规模神经网络模型，能够理解和生成自然语言文本。",
+    "example": "GPT-4、Claude、文心一言等都是典型的大语言模型。"
+  },
+  {
+    "id": "kw_002",
+    "term": "Transformer",
+    "abbr": "",
+    "phonetic": "/trænsˈfɔːrmər/",
+    "translation": "Transformer架构",
+    "category": "架构",
+    "definition": "2017年Google提出的深度学习架构，基于自注意力机制，成为现代大语言模型的基础。",
+    "example": "BERT、GPT系列模型都基于Transformer架构构建。"
+  },
+  {
+    "id": "kw_003",
+    "term": "Attention Mechanism",
+    "abbr": "",
+    "phonetic": "/əˈtenʃən ˈmekənɪzəm/",
+    "translation": "注意力机制",
+    "category": "核心技术",
+    "definition": "让模型在处理序列数据时能够动态关注不同部分的重要性，提升理解和生成能力。",
+    "example": "自注意力机制使Transformer能够并行处理整个句子。"
+  },
+  {
+    "id": "kw_004",
+    "term": "Prompt Engineering",
+    "abbr": "",
+    "phonetic": "/prɒmpt ˌendʒɪˈnɪərɪŋ/",
+    "translation": "提示工程",
+    "category": "应用技术",
+    "definition": "设计和优化输入提示词（Prompt）的技术，以引导大语言模型产生更准确、有用的输出。",
+    "example": "通过Chain-of-Thought提示，可以让模型逐步推理解决数学问题。"
+  },
+  {
+    "id": "kw_005",
+    "term": "Fine-tuning",
+    "abbr": "",
+    "phonetic": "/faɪn ˈtuːnɪŋ/",
+    "translation": "微调",
+    "category": "训练技术",
+    "definition": "在预训练模型的基础上，使用特定领域的小规模数据进一步训练，使模型适应特定任务。",
+    "example": "在GPT模型基础上使用医疗数据微调，可得到医学问答专用模型。"
+  },
+  {
+    "id": "kw_006",
+    "term": "Reinforcement Learning from Human Feedback",
+    "abbr": "RLHF",
+    "phonetic": "/ˌriːɪnˈfɔːrsmənt ˈlɜːrnɪŋ frɒm ˈhjuːmən ˈfiːdbæk/",
+    "translation": "人类反馈强化学习",
+    "category": "训练技术",
+    "definition": "通过人类对模型输出的评分反馈来训练奖励模型，再用强化学习优化语言模型。",
+    "example": "ChatGPT使用RLHF技术使回复更符合人类偏好。"
+  },
+  {
+    "id": "kw_007",
+    "term": "Token",
+    "abbr": "",
+    "phonetic": "/ˈtoʊkən/",
+    "translation": "词元/令牌",
+    "category": "基础概念",
+    "definition": "模型处理文本时的最小单位，可以是单词、子词或字符，是模型计费和长度限制的基本单位。",
+    "example": "'ChatGPT'可能被拆分为'Chat'和'G'、'PT'三个token。"
+  },
+  {
+    "id": "kw_008",
+    "term": "Embedding",
+    "abbr": "",
+    "phonetic": "/ɪmˈbedɪŋ/",
+    "translation": "嵌入向量",
+    "category": "核心技术",
+    "definition": "将离散的数据（如词语、句子）映射为连续的低维向量表示，保留语义信息。",
+    "example": "语义相似的词如'国王'和'皇后'在嵌入空间中距离较近。"
+  },
+  {
+    "id": "kw_009",
+    "term": "Hallucination",
+    "abbr": "",
+    "phonetic": "/həˌluːsɪˈneɪʃən/",
+    "translation": "幻觉",
+    "category": "模型问题",
+    "definition": "模型生成看似合理但实际上虚假或不准确内容的现象，是大语言模型的固有问题之一。",
+    "example": "模型可能虚构不存在的论文引用或编造历史事件细节。"
+  },
+  {
+    "id": "kw_010",
+    "term": "Retrieval-Augmented Generation",
+    "abbr": "RAG",
+    "phonetic": "/rɪˈtriːvəl ɔːɡˈmentɪd ˌdʒenəˈreɪʃən/",
+    "translation": "检索增强生成",
+    "category": "应用技术",
+    "definition": "结合信息检索和文本生成的技术，先从知识库检索相关信息，再让模型基于检索内容生成回答。",
+    "example": "企业客服系统使用RAG从内部文档中检索答案，减少幻觉。"
+  },
+  {
+    "id": "kw_011",
+    "term": "Parameter",
+    "abbr": "",
+    "phonetic": "/pəˈræmɪtər/",
+    "translation": "参数",
+    "category": "基础概念",
+    "definition": "神经网络中可学习的权重和偏置，参数量通常衡量模型规模大小。",
+    "example": "GPT-3拥有1750亿参数，GPT-4估计超过1万亿参数。"
+  },
+  {
+    "id": "kw_012",
+    "term": "Generative Pre-trained Transformer",
+    "abbr": "GPT",
+    "phonetic": "/ˈdʒenərətɪv priːˈtreɪnd trænsˈfɔːrmər/",
+    "translation": "生成式预训练Transformer",
+    "category": "模型系列",
+    "definition": "OpenAI开发的基于Transformer的生成式语言模型系列，采用自回归方式生成文本。",
+    "example": "GPT-4是GPT系列最新的多模态大语言模型。"
+  },
+  {
+    "id": "kw_013",
+    "term": "Bidirectional Encoder Representations from Transformers",
+    "abbr": "BERT",
+    "phonetic": "/bɜːrt/",
+    "translation": "双向编码器表示",
+    "category": "模型系列",
+    "definition": "Google提出的双向Transformer编码器模型，通过掩码语言模型预训练，擅长理解任务。",
+    "example": "BERT在文本分类、命名实体识别等NLU任务上表现出色。"
+  },
+  {
+    "id": "kw_014",
+    "term": "Chain-of-Thought",
+    "abbr": "CoT",
+    "phonetic": "/tʃeɪn ɒv θɔːt/",
+    "translation": "思维链",
+    "category": "提示技术",
+    "definition": "一种提示工程技术，通过引导模型展示逐步推理过程来提升复杂问题的求解能力。",
+    "example": "'让我们一步一步思考'是典型的思维链提示。"
+  },
+  {
+    "id": "kw_015",
+    "term": "Zero-shot Learning",
+    "abbr": "",
+    "phonetic": "/ˈzɪəroʊ ʃɒt ˈlɜːrnɪŋ/",
+    "translation": "零样本学习",
+    "category": "学习能力",
+    "definition": "模型在没有见过特定任务示例的情况下，仅通过任务描述就能完成新任务的能力。",
+    "example": "大模型可以直接将中文翻译成冰岛语，即使没有见过该语言对的翻译示例。"
+  },
+  {
+    "id": "kw_016",
+    "term": "Few-shot Learning",
+    "abbr": "",
+    "phonetic": "/fjuː ʃɒt ˈlɜːrnɪŋ/",
+    "translation": "少样本学习",
+    "category": "学习能力",
+    "definition": "模型仅通过少量示例就能快速适应新任务的能力，大语言模型在这方面表现突出。",
+    "example": "给模型3个情感分析示例，它就能准确分析新的评论情感。"
+  },
+  {
+    "id": "kw_017",
+    "term": "Temperature",
+    "abbr": "",
+    "phonetic": "/ˈtemprətʃər/",
+    "translation": "温度参数",
+    "category": "生成控制",
+    "definition": "控制模型输出随机性的参数，值越高输出越多样和创造性，越低越确定和保守。",
+    "example": "创意写作时temperature设为0.8，代码生成时设为0.2。"
+  },
+  {
+    "id": "kw_018",
+    "term": "Context Window",
+    "abbr": "",
+    "phonetic": "/ˈkɒntekst ˈwɪndoʊ/",
+    "translation": "上下文窗口",
+    "category": "基础概念",
+    "definition": "模型单次能够处理的最大token数量，决定了模型能记住多长的对话或文档。",
+    "example": "GPT-4 Turbo的上下文窗口为128K token，约等于300页文档。"
+  },
+  {
+    "id": "kw_019",
+    "term": "Vector Database",
+    "abbr": "",
+    "phonetic": "/ˈvektər ˈdeɪtəbeɪs/",
+    "translation": "向量数据库",
+    "category": "基础设施",
+    "definition": "专门用于存储和高效检索高维向量数据的数据库，是大模型应用的重要基础设施。",
+    "example": "Pinecone、Milvus、Weaviate是主流的向量数据库产品。"
+  },
+  {
+    "id": "kw_020",
+    "term": "Inference",
+    "abbr": "",
+    "phonetic": "/ˈɪnfərəns/",
+    "translation": "推理/推断",
+    "category": "基础概念",
+    "definition": "使用训练好的模型对新输入数据进行预测或生成的过程，与训练阶段相对。",
+    "example": "用户向ChatGPT提问时，模型正在进行推理计算生成回答。"
+  },
+  {
+    "id": "kw_021",
+    "term": "Quantization",
+    "abbr": "",
+    "phonetic": "/ˌkwɒntɪˈzeɪʃən/",
+    "translation": "量化",
+    "category": "模型优化",
+    "definition": "将模型参数从高精度（如32位浮点）转换为低精度（如8位整数）的技术，用于减少模型大小和加速推理。",
+    "example": "GPTQ和AWQ是常用的大模型量化方法。"
+  },
+  {
+    "id": "kw_022",
+    "term": "Knowledge Distillation",
+    "abbr": "",
+    "phonetic": "/ˈnɒlɪdʒ ˌdɪstɪˈleɪʃən/",
+    "translation": "知识蒸馏",
+    "category": "模型优化",
+    "definition": "将大型教师模型的知识迁移到小型学生模型的技术，在保持性能的同时减小模型规模。",
+    "example": "DistilBERT是BERT的知识蒸馏版本，体积缩小40%但保留97%性能。"
+  },
+  {
+    "id": "kw_023",
+    "term": "Gradient Descent",
+    "abbr": "",
+    "phonetic": "/ˈɡreɪdiənt dɪˈsent/",
+    "translation": "梯度下降",
+    "category": "训练技术",
+    "definition": "通过计算损失函数对参数的梯度，沿梯度反方向更新参数以最小化损失的基本优化算法。",
+    "example": "Adam是深度学习中最常用的梯度下降变体优化器。"
+  },
+  {
+    "id": "kw_024",
+    "term": "Overfitting",
+    "abbr": "",
+    "phonetic": "/ˌoʊvərˈfɪtɪŋ/",
+    "translation": "过拟合",
+    "category": "训练问题",
+    "definition": "模型在训练数据上表现很好但在新数据上表现差的现象，通常是模型过于复杂或训练数据不足导致。",
+    "example": "使用Dropout和早停是防止过拟合的常用方法。"
+  },
+  {
+    "id": "kw_025",
+    "term": "Backpropagation",
+    "abbr": "",
+    "phonetic": "/ˌbækprɒpəˈɡeɪʃən/",
+    "translation": "反向传播",
+    "category": "训练技术",
+    "definition": "神经网络中通过链式法则从输出层向输入层计算梯度的算法，是模型训练的核心机制。",
+    "example": "反向传播与梯度下降结合，实现了神经网络参数的自动优化。"
+  },
+  {
+    "id": "kw_026",
+    "term": "Activation Function",
+    "abbr": "",
+    "phonetic": "/ˌæktɪˈveɪʃən ˈfʌŋkʃən/",
+    "translation": "激活函数",
+    "category": "核心技术",
+    "definition": "神经网络中引入非线性变换的函数，使网络能够学习复杂的模式和关系。",
+    "example": "ReLU、GELU、Swish是 Transformer 中常用的激活函数。"
+  },
+  {
+    "id": "kw_027",
+    "term": "Multi-head Attention",
+    "abbr": "",
+    "phonetic": "/ˈmʌlti hed əˈtenʃən/",
+    "translation": "多头注意力",
+    "category": "核心技术",
+    "definition": "Transformer中并行运行多组注意力机制的技术，让模型从不同角度理解输入信息。",
+    "example": "GPT-3有96个注意力头，每个头关注不同的语义关系。"
+  },
+  {
+    "id": "kw_028",
+    "term": "Positional Encoding",
+    "abbr": "",
+    "phonetic": "/pəˈzɪʃənl ɪnˈkoʊdɪŋ/",
+    "translation": "位置编码",
+    "category": "核心技术",
+    "definition": "为输入序列中的每个位置添加位置信息的技术，使模型理解词语的顺序关系。",
+    "example": "Transformer使用正弦余弦函数生成位置编码。"
+  },
+  {
+    "id": "kw_029",
+    "term": "Layer Normalization",
+    "abbr": "LayerNorm",
+    "phonetic": "/ˈleɪər ˌnɔːrmələˈzeɪʃən/",
+    "translation": "层归一化",
+    "category": "核心技术",
+    "definition": "对每个样本的所有特征进行归一化的技术，稳定深层网络的训练过程。",
+    "example": "层归一化是Transformer架构中的标准组件。"
+  },
+  {
+    "id": "kw_030",
+    "term": "Dropout",
+    "abbr": "",
+    "phonetic": "/ˈdrɒpaʊt/",
+    "translation": "随机失活",
+    "category": "正则化",
+    "definition": "训练时随机忽略部分神经元的正则化技术，防止模型过度依赖特定神经元。",
+    "example": "BERT训练时使用0.1的dropout率。"
+  },
+  {
+    "id": "kw_031",
+    "term": "Pre-training",
+    "abbr": "",
+    "phonetic": "/priːˈtreɪnɪŋ/",
+    "translation": "预训练",
+    "category": "训练阶段",
+    "definition": "在大规模无标注数据上训练模型学习通用表示的过程，是现代NLP的标准范式。",
+    "example": "GPT模型先在海量互联网文本上进行预训练。"
+  },
+  {
+    "id": "kw_032",
+    "term": "In-context Learning",
+    "abbr": "",
+    "phonetic": "/ɪn ˈkɒntekst ˈlɜːrnɪŋ/",
+    "translation": "上下文学习",
+    "category": "学习能力",
+    "definition": "大语言模型通过在提示中提供示例来学习新任务的能力，无需更新模型参数。",
+    "example": "在提示中给出3个翻译示例，模型就能按照相同模式翻译新句子。"
+  },
+  {
+    "id": "kw_033",
+    "term": "Foundation Model",
+    "abbr": "",
+    "phonetic": "/faʊnˈdeɪʃən ˈmɒdl/",
+    "translation": "基础模型",
+    "category": "基础概念",
+    "definition": "在大规模数据上训练、可适应多种下游任务的通用AI模型，是大语言模型的上位概念。",
+    "example": "GPT-4、Stable Diffusion都属于基础模型。"
+  },
+  {
+    "id": "kw_034",
+    "term": "Multimodal",
+    "abbr": "",
+    "phonetic": "/ˌmʌltiˈmoʊdəl/",
+    "translation": "多模态",
+    "category": "模型类型",
+    "definition": "能够同时理解和生成多种数据类型（文本、图像、音频、视频）的AI模型。",
+    "example": "GPT-4V可以理解图片内容并回答相关问题。"
+  },
+  {
+    "id": "kw_035",
+    "term": "Alignment",
+    "abbr": "",
+    "phonetic": "/əˈlaɪnmənt/",
+    "translation": "对齐",
+    "category": "安全研究",
+    "definition": "使AI系统的行为与人类的价值观、意图和偏好保持一致的研究领域和技术。",
+    "example": "RLHF是实现人机对齐的重要技术路径。"
+  },
+  {
+    "id": "kw_036",
+    "term": "Agent",
+    "abbr": "",
+    "phonetic": "/ˈeɪdʒənt/",
+    "translation": "智能体",
+    "category": "应用技术",
+    "definition": "能够感知环境、做出决策并执行行动的自主AI系统，可以调用工具完成复杂任务。",
+    "example": "AutoGPT是一个可以自主规划并执行多步骤任务的AI Agent。"
+  },
+  {
+    "id": "kw_037",
+    "term": "Function Calling",
+    "abbr": "",
+    "phonetic": "/ˈfʌŋkʃən ˈkɔːlɪŋ/",
+    "translation": "函数调用",
+    "category": "应用技术",
+    "definition": "大语言模型识别何时需要调用外部函数/API，并生成正确参数的能力。",
+    "example": "模型可以调用天气API获取实时天气信息来回答用户问题。"
+  },
+  {
+    "id": "kw_038",
+    "term": "Tokenization",
+    "abbr": "",
+    "phonetic": "/ˌtoʊkənaɪˈzeɪʃən/",
+    "translation": "分词",
+    "category": "预处理",
+    "definition": "将文本拆分为模型可处理的token序列的过程，不同模型使用不同的分词器。",
+    "example": "BPE（Byte Pair Encoding）是GPT系列使用的分词算法。"
+  },
+  {
+    "id": "kw_039",
+    "term": "Perplexity",
+    "abbr": "PPL",
+    "phonetic": "/pərˈpleksɪti/",
+    "translation": "困惑度",
+    "category": "评估指标",
+    "definition": "衡量语言模型预测能力的指标，值越低表示模型对文本的预测越准确。",
+    "example": "GPT-4在标准评测集上的困惑度远低于前代模型。"
+  },
+  {
+    "id": "kw_040",
+    "term": "BLEU Score",
+    "abbr": "",
+    "phonetic": "/bluː skɔːr/",
+    "translation": "双语评估替补分数",
+    "category": "评估指标",
+    "definition": "评估机器翻译和文本生成质量的指标，通过比较生成文本与参考文本的n-gram重叠度计算。",
+    "example": "神经机器翻译系统的BLEU分数通常比传统方法高10-20点。"
+  },
+  {
+    "id": "kw_041",
+    "term": "LoRA",
+    "abbr": "",
+    "phonetic": "/ˈloʊrə/",
+    "translation": "低秩适应",
+    "category": "模型优化",
+    "definition": "通过低秩矩阵分解来微调大语言模型的参数高效方法，大幅减少训练参数量。",
+    "example": "使用LoRA可以在消费级GPU上微调70B参数的大模型。"
+  },
+  {
+    "id": "kw_042",
+    "term": "Parameter-Efficient Fine-Tuning",
+    "abbr": "PEFT",
+    "phonetic": "/pəˈræmɪtər ɪˈfɪʃənt faɪn ˈtuːnɪŋ/",
+    "translation": "参数高效微调",
+    "category": "模型优化",
+    "definition": "只微调少量参数就能使大模型适应特定任务的技术集合，包括LoRA、Prefix Tuning等。",
+    "example": "PEFT让个人开发者也能低成本定制大模型。"
+  },
+  {
+    "id": "kw_043",
+    "term": "Mixture of Experts",
+    "abbr": "MoE",
+    "phonetic": "/ˈmɪkstʃər ɒv ˈekspɜːrts/",
+    "translation": "混合专家模型",
+    "category": "架构",
+    "definition": "由多个专家子网络和一个门控网络组成的架构，每次只激活部分专家进行计算。",
+    "example": "Mixtral 8x7B使用MoE架构，总参数量47B但每次只激活13B参数。"
+  },
+  {
+    "id": "kw_044",
+    "term": "Instruction Tuning",
+    "abbr": "",
+    "phonetic": "/ɪnˈstrʌkʃən ˈtuːnɪŋ/",
+    "translation": "指令微调",
+    "category": "训练技术",
+    "definition": "使用（指令，输入，输出）格式的数据集对预训练模型进行微调，使其更好地遵循人类指令。",
+    "example": "Alpaca使用Self-Instruct方法生成的指令数据对LLaMA进行指令微调。"
+  },
+  {
+    "id": "kw_045",
+    "term": "Self-Attention",
+    "abbr": "",
+    "phonetic": "/self əˈtenʃən/",
+    "translation": "自注意力",
+    "category": "核心技术",
+    "definition": "注意力机制的一种，序列中的每个元素都与序列中所有其他元素计算注意力权重。",
+    "example": "自注意力让Transformer能够捕获长距离依赖关系。"
+  },
+  {
+    "id": "kw_046",
+    "term": "Cross-Attention",
+    "abbr": "",
+    "phonetic": "/krɒs əˈtenʃən/",
+    "translation": "交叉注意力",
+    "category": "核心技术",
+    "definition": "两个不同序列之间的注意力机制，一个序列的每个元素关注另一个序列的所有元素。",
+    "example": "机器翻译的解码器使用交叉注意力关注编码器的输出。"
+  },
+  {
+    "id": "kw_047",
+    "term": "Beam Search",
+    "abbr": "",
+    "phonetic": "/biːm sɜːrtʃ/",
+    "translation": "束搜索",
+    "category": "解码策略",
+    "definition": "文本生成中在每个步骤保留多个候选序列的搜索算法，平衡生成质量和多样性。",
+    "example": "机器翻译通常使用beam size为5的束搜索。"
+  },
+  {
+    "id": "kw_048",
+    "term": "Top-k Sampling",
+    "abbr": "",
+    "phonetic": "/tɒp keɪ ˈsæmplɪŋ/",
+    "translation": "Top-k采样",
+    "category": "解码策略",
+    "definition": "文本生成时仅从概率最高的k个token中随机采样的策略，避免选择极低概率的词。",
+    "example": "Top-k=50是GPT模型常用的采样参数。"
+  },
+  {
+    "id": "kw_049",
+    "term": "Top-p Sampling",
+    "abbr": "Nucleus Sampling",
+    "phonetic": "/tɒp piː ˈsæmplɪŋ/",
+    "translation": "核采样",
+    "category": "解码策略",
+    "definition": "从累积概率达到p的最小token集合中采样的策略，比Top-k更动态灵活。",
+    "example": "Top-p=0.9表示从累积概率90%的token集合中采样。"
+  },
+  {
+    "id": "kw_050",
+    "term": "Contrastive Search",
+    "abbr": "",
+    "phonetic": "/kənˈtræstɪv sɜːrtʃ/",
+    "translation": "对比搜索",
+    "category": "解码策略",
+    "definition": "结合模型置信度和退化惩罚的解码方法，生成既流畅又多样的文本。",
+    "example": "对比搜索能有效减少文本重复问题。"
+  },
+  {
+    "id": "kw_051",
+    "term": "Word2Vec",
+    "abbr": "",
+    "phonetic": "/wɜːrd tuː vek/",
+    "translation": "词向量",
+    "category": "表示学习",
+    "definition": "2013年Google提出的词嵌入模型，通过预测上下文来学习词的向量表示。",
+    "example": "Word2Vec的'king - man + woman ≈ queen'展示了向量运算的语义特性。"
+  },
+  {
+    "id": "kw_052",
+    "term": "GloVe",
+    "abbr": "",
+    "phonetic": "/ɡlʌv/",
+    "translation": "全局向量",
+    "category": "表示学习",
+    "definition": "结合全局词共现统计和局部上下文窗口的词嵌入学习方法。",
+    "example": "GloVe在多个NLP任务上表现优于Word2Vec。"
+  },
+  {
+    "id": "kw_053",
+    "term": "Seq2Seq",
+    "abbr": "",
+    "phonetic": "/siːk tuː siːk/",
+    "translation": "序列到序列",
+    "category": "架构",
+    "definition": "将输入序列映射为输出序列的神经网络架构，由编码器和解码器组成。",
+    "example": "机器翻译和文本摘要常用Seq2Seq架构。"
+  },
+  {
+    "id": "kw_054",
+    "term": "Recurrent Neural Network",
+    "abbr": "RNN",
+    "phonetic": "/rɪˈkʌrənt ˈnʊrəl ˈnetwɜːrk/",
+    "translation": "循环神经网络",
+    "category": "架构",
+    "definition": "通过隐藏状态传递信息的神经网络，天然适合处理序列数据，但难以捕获长距离依赖。",
+    "example": "LSTM和GRU是RNN的改进变体。"
+  },
+  {
+    "id": "kw_055",
+    "term": "Long Short-Term Memory",
+    "abbr": "LSTM",
+    "phonetic": "/lɒŋ ʃɔːrt tɜːrm ˈmeməri/",
+    "translation": "长短期记忆网络",
+    "category": "架构",
+    "definition": "通过门控机制控制信息流动的RNN变体，有效解决了梯度消失问题。",
+    "example": "LSTM曾广泛应用于机器翻译和语音识别。"
+  },
+  {
+    "id": "kw_056",
+    "term": "Convolutional Neural Network",
+    "abbr": "CNN",
+    "phonetic": "/ˌkɒnvəˈluːʃənəl ˈnʊrəl ˈnetwɜːrk/",
+    "translation": "卷积神经网络",
+    "category": "架构",
+    "definition": "使用卷积层提取局部特征的神经网络，最初用于图像处理，也可用于文本分析。",
+    "example": "TextCNN是应用于文本分类的CNN模型。"
+  },
+  {
+    "id": "kw_057",
+    "term": "Autoencoder",
+    "abbr": "",
+    "phonetic": "/ˌɔːtoʊɪnˈkoʊdər/",
+    "translation": "自编码器",
+    "category": "架构",
+    "definition": "通过编码器压缩数据再用解码器重建的无监督学习神经网络，用于降维和特征学习。",
+    "example": "去噪自编码器可以从损坏的输入中恢复原始数据。"
+  },
+  {
+    "id": "kw_058",
+    "term": "Variational Autoencoder",
+    "abbr": "VAE",
+    "phonetic": "/ˌveəriˈeɪʃənəl ˌɔːtoʊɪnˈkoʊdər/",
+    "translation": "变分自编码器",
+    "category": "生成模型",
+    "definition": "在自编码器基础上引入概率分布约束的生成模型，可以生成新的数据样本。",
+    "example": "VAE常用于图像生成和数据增强。"
+  },
+  {
+    "id": "kw_059",
+    "term": "Generative Adversarial Network",
+    "abbr": "GAN",
+    "phonetic": "/ˈdʒenərətɪv ədˈvɜːrsəriəl ˈnetwɜːrk/",
+    "translation": "生成对抗网络",
+    "category": "生成模型",
+    "definition": "由生成器和判别器通过对抗训练共同优化的生成模型框架。",
+    "example": "StyleGAN可以生成高质量的人脸图像。"
+  },
+  {
+    "id": "kw_060",
+    "term": "Diffusion Model",
+    "abbr": "",
+    "phonetic": "/dɪˈfjuːʒən ˈmɒdl/",
+    "translation": "扩散模型",
+    "category": "生成模型",
+    "definition": "通过逐步去噪过程生成数据的模型，是当前图像生成领域的主流技术。",
+    "example": "Stable Diffusion和DALL-E都基于扩散模型。"
+  },
+  {
+    "id": "kw_061",
+    "term": "Transfer Learning",
+    "abbr": "",
+    "phonetic": "/ˈtrænsfɜːr ˈlɜːrnɪŋ/",
+    "translation": "迁移学习",
+    "category": "训练范式",
+    "definition": "将在一个任务上学到的知识应用到相关任务上的技术，预训练+微调是典型范式。",
+    "example": "在ImageNet上预训练的模型可以迁移到医学影像分析。"
+  },
+  {
+    "id": "kw_062",
+    "term": "Meta-Learning",
+    "abbr": "",
+    "phonetic": "/ˈmetə ˈlɜːrnɪŋ/",
+    "translation": "元学习",
+    "category": "训练范式",
+    "definition": "学习如何学习的机器学习方法，目标是让模型能够快速适应新任务。",
+    "example": "MAML算法通过找到好的参数初始化来实现快速适应。"
+  },
+  {
+    "id": "kw_063",
+    "term": "Curriculum Learning",
+    "abbr": "",
+    "phonetic": "/kəˈrɪkjələm ˈlɜːrnɪŋ/",
+    "translation": "课程学习",
+    "category": "训练策略",
+    "definition": "按照从简单到困难的顺序组织训练样本的策略，模拟人类的学习过程。",
+    "example": "先训练短句子再训练长句子可以提高翻译模型性能。"
+  },
+  {
+    "id": "kw_064",
+    "term": "Data Augmentation",
+    "abbr": "",
+    "phonetic": "/ˈdeɪtə ˌɔːɡmenˈteɪʃən/",
+    "translation": "数据增强",
+    "category": "数据策略",
+    "definition": "通过对训练数据进行变换来增加数据多样性的技术，提高模型泛化能力。",
+    "example": "NLP中的数据增强包括同义词替换、回译等方法。"
+  },
+  {
+    "id": "kw_065",
+    "term": "Active Learning",
+    "abbr": "",
+    "phonetic": "/ˈæktɪv ˈlɜːrnɪŋ/",
+    "translation": "主动学习",
+    "category": "训练策略",
+    "definition": "让模型主动选择最有价值的样本进行标注，减少标注成本。",
+    "example": "模型选择置信度最低的样本请求人工标注。"
+  },
+  {
+    "id": "kw_066",
+    "term": "Federated Learning",
+    "abbr": "",
+    "phonetic": "/ˈfedəreɪtɪd ˈlɜːrnɪŋ/",
+    "translation": "联邦学习",
+    "category": "隐私计算",
+    "definition": "在不集中原始数据的情况下协作训练模型的分布式学习框架，保护数据隐私。",
+    "example": "手机厂商使用联邦学习在本地数据上训练输入法模型。"
+  },
+  {
+    "id": "kw_067",
+    "term": "Differential Privacy",
+    "abbr": "DP",
+    "phonetic": "/ˌdɪfəˈrenʃəl ˈpraɪvəsi/",
+    "translation": "差分隐私",
+    "category": "隐私计算",
+    "definition": "通过向数据或查询结果添加噪声来保护个体隐私的数学框架。",
+    "example": "苹果使用差分隐私技术收集用户使用统计信息。"
+  },
+  {
+    "id": "kw_068",
+    "term": "Neural Architecture Search",
+    "abbr": "NAS",
+    "phonetic": "/ˈnʊrəl ˈɑːrkɪtektʃər sɜːrtʃ/",
+    "translation": "神经架构搜索",
+    "category": "AutoML",
+    "definition": "自动搜索最优神经网络架构的技术，减少人工设计网络的工作量。",
+    "example": "EfficientNet就是通过NAS发现的网络架构。"
+  },
+  {
+    "id": "kw_069",
+    "term": "Neural Machine Translation",
+    "abbr": "NMT",
+    "phonetic": "/ˈnʊrəl məˈʃiːn trænsˈleɪʃən/",
+    "translation": "神经机器翻译",
+    "category": "应用",
+    "definition": "基于神经网络（尤其是Seq2Seq和Transformer）的机器翻译方法。",
+    "example": "Google翻译在2016年全面转向神经机器翻译。"
+  },
+  {
+    "id": "kw_070",
+    "term": "Named Entity Recognition",
+    "abbr": "NER",
+    "phonetic": "/neɪmd ˈentɪti ˌrekəɡˈnɪʃən/",
+    "translation": "命名实体识别",
+    "category": "NLP任务",
+    "definition": "从文本中识别和分类命名实体（如人名、地名、组织名）的任务。",
+    "example": "'马云创办了阿里巴巴'中，'马云'是人名，'阿里巴巴'是组织名。"
+  },
+  {
+    "id": "kw_071",
+    "term": "Sentiment Analysis",
+    "abbr": "",
+    "phonetic": "/ˈsentɪmənt əˈnæləsɪs/",
+    "translation": "情感分析",
+    "category": "NLP任务",
+    "definition": "自动识别和提取文本中主观情感倾向的技术，常用于舆情监控。",
+    "example": "分析产品评论判断用户对产品的好评或差评。"
+  },
+  {
+    "id": "kw_072",
+    "term": "Question Answering",
+    "abbr": "QA",
+    "phonetic": "/ˈkwestʃən ˈænsərɪŋ/",
+    "translation": "问答系统",
+    "category": "NLP任务",
+    "definition": "自动回答自然语言问题的技术，可以是基于知识库或基于阅读理解。",
+    "example": "Siri和Alexa都是问答系统的应用实例。"
+  },
+  {
+    "id": "kw_073",
+    "term": "Text Summarization",
+    "abbr": "",
+    "phonetic": "/tekst ˌsʌməraɪˈzeɪʃən/",
+    "translation": "文本摘要",
+    "category": "NLP任务",
+    "definition": "自动将长文本压缩为简短摘要的技术，分为抽取式和生成式两种。",
+    "example": "新闻APP使用文本摘要技术在列表页显示文章摘要。"
+  },
+  {
+    "id": "kw_074",
+    "term": "Part-of-Speech Tagging",
+    "abbr": "POS",
+    "phonetic": "/pɑːrt ɒv spiːtʃ ˈtæɡɪŋ/",
+    "translation": "词性标注",
+    "category": "NLP任务",
+    "definition": "为文本中的每个词标注其词性（名词、动词、形容词等）的基础NLP任务。",
+    "example": "'学习'在'学习英语'中是动词，在'学习经验'中是名词。"
+  },
+  {
+    "id": "kw_075",
+    "term": "Dependency Parsing",
+    "abbr": "",
+    "phonetic": "/dɪˈpendənsi ˈpɑːrsɪŋ/",
+    "translation": "依存句法分析",
+    "category": "NLP任务",
+    "definition": "分析句子中词语之间的依存关系，构建句法树结构。",
+    "example": "'我吃苹果'中，'吃'是核心谓词，'我'是主语，'苹果'是宾语。"
+  },
+  {
+    "id": "kw_076",
+    "term": "Constituency Parsing",
+    "abbr": "",
+    "phonetic": "/kənˈstɪtʃuənsi ˈpɑːrsɪŋ/",
+    "translation": "成分句法分析",
+    "category": "NLP任务",
+    "definition": "将句子递归分解为短语成分（如名词短语、动词短语）并构建短语结构树。",
+    "example": "'一只猫'组成名词短语，'在睡觉'组成动词短语。"
+  },
+  {
+    "id": "kw_077",
+    "term": "Coreference Resolution",
+    "abbr": "",
+    "phonetic": "/ˈkoʊrefərəns ˌrezəˈluːʃən/",
+    "translation": "共指消解",
+    "category": "NLP任务",
+    "definition": "识别文本中指代同一实体的不同表达（如代词、名词短语）的任务。",
+    "example": "'张三来了，他很高兴'中的'他'指代'张三'。"
+  },
+  {
+    "id": "kw_078",
+    "term": "Natural Language Inference",
+    "abbr": "NLI",
+    "phonetic": "/ˈnætʃrəl ˈlæŋɡwɪdʒ ˈɪnfərəns/",
+    "translation": "自然语言推理",
+    "category": "NLP任务",
+    "definition": "判断两个句子之间的逻辑关系（蕴含、矛盾、中立）的任务。",
+    "example": "前提：'所有人都会死'，假设：'苏格拉底会死'，关系：蕴含。"
+  },
+  {
+    "id": "kw_079",
+    "term": "Semantic Role Labeling",
+    "abbr": "SRL",
+    "phonetic": "/sɪˈmæntɪk roʊl ˈleɪbəlɪŋ/",
+    "translation": "语义角色标注",
+    "category": "NLP任务",
+    "definition": "识别句子中谓词的论元及其语义角色（如施事、受事、工具等）。",
+    "example": "'小明用钥匙开了门'中，'小明'是施事，'钥匙'是工具，'门'是受事。"
+  },
+  {
+    "id": "kw_080",
+    "term": "Optical Character Recognition",
+    "abbr": "OCR",
+    "phonetic": "/ˈɒptɪkl ˈkærəktər ˌrekəɡˈnɪʃən/",
+    "translation": "光学字符识别",
+    "category": "应用技术",
+    "definition": "将图像中的文字转换为机器可读文本的技术，是计算机视觉与NLP的结合。",
+    "example": "扫描文档后使用OCR技术提取其中的文字内容。"
+  },
+  {
+    "id": "kw_081",
+    "term": "Speech Recognition",
+    "abbr": "ASR",
+    "phonetic": "/spiːtʃ ˌrekəɡˈnɪʃən/",
+    "translation": "语音识别",
+    "category": "应用技术",
+    "definition": "将人类语音转换为文本的技术，是智能语音助手的基础。",
+    "example": "微信语音转文字功能使用了语音识别技术。"
+  },
+  {
+    "id": "kw_082",
+    "term": "Text-to-Speech",
+    "abbr": "TTS",
+    "phonetic": "/tekst tuː spiːtʃ/",
+    "translation": "文本转语音",
+    "category": "应用技术",
+    "definition": "将文本转换为自然语音的技术，包括声学模型和声码器两个核心组件。",
+    "example": "导航软件的语音播报使用了TTS技术。"
+  },
+  {
+    "id": "kw_083",
+    "term": "Computer Vision",
+    "abbr": "CV",
+    "phonetic": "/kəmˈpjuːtər ˈvɪʒən/",
+    "translation": "计算机视觉",
+    "category": "领域",
+    "definition": "让计算机能够理解和分析视觉信息（图像和视频）的人工智能领域。",
+    "example": "人脸识别、物体检测、图像分割都属于计算机视觉任务。"
+  },
+  {
+    "id": "kw_084",
+    "term": "Object Detection",
+    "abbr": "",
+    "phonetic": "/ˈɒbdʒɪkt dɪˈtekʃən/",
+    "translation": "目标检测",
+    "category": "CV任务",
+    "definition": "在图像中定位和识别多个目标物体的计算机视觉任务。",
+    "example": "YOLO和Faster R-CNN是经典的目标检测算法。"
+  },
+  {
+    "id": "kw_085",
+    "term": "Image Segmentation",
+    "abbr": "",
+    "phonetic": "/ˈɪmɪdʒ ˌseɡmenˈteɪʃən/",
+    "translation": "图像分割",
+    "category": "CV任务",
+    "definition": "将图像划分为多个区域或像素级别类别的任务，分为语义分割和实例分割。",
+    "example": "自动驾驶需要精确分割道路、车辆和行人。"
+  },
+  {
+    "id": "kw_086",
+    "term": "Face Recognition",
+    "abbr": "",
+    "phonetic": "/feɪs ˌrekəɡˈnɪʃən/",
+    "translation": "人脸识别",
+    "category": "CV应用",
+    "definition": "自动识别和验证图像或视频中人脸身份的技术。",
+    "example": "手机人脸解锁和机场安检人脸识别是典型应用。"
+  },
+  {
+    "id": "kw_087",
+    "term": "Style Transfer",
+    "abbr": "",
+    "phonetic": "/staɪl ˈtrænsfɜːr/",
+    "translation": "风格迁移",
+    "category": "CV应用",
+    "definition": "将一幅图像的艺术风格应用到另一幅图像内容上的技术。",
+    "example": "将普通照片转换为梵高或莫奈的绘画风格。"
+  },
+  {
+    "id": "kw_088",
+    "term": "Super Resolution",
+    "abbr": "SR",
+    "phonetic": "/ˈsuːpər ˌrezəˈluːʃən/",
+    "translation": "超分辨率",
+    "category": "CV应用",
+    "definition": "从低分辨率图像重建高分辨率图像的技术，提升图像清晰度和细节。",
+    "example": "老照片修复和视频画质增强使用超分辨率技术。"
+  },
+  {
+    "id": "kw_089",
+    "term": "Generative Pre-training",
+    "abbr": "",
+    "phonetic": "/ˈdʒenərətɪv priːˈtreɪnɪŋ/",
+    "translation": "生成式预训练",
+    "category": "训练范式",
+    "definition": "使用自回归方式预测下一个token进行无监督预训练的方法，是GPT系列的核心。",
+    "example": "GPT通过从左到右预测下一个词来学习语言模型。"
+  },
+  {
+    "id": "kw_090",
+    "term": "Masked Language Model",
+    "abbr": "MLM",
+    "phonetic": "/mɑːskt ˈlæŋɡwɪdʒ ˈmɒdl/",
+    "translation": "掩码语言模型",
+    "category": "训练范式",
+    "definition": "随机遮盖输入序列中的部分token，让模型预测被遮盖的内容，是BERT的预训练方式。",
+    "example": "'我今天[MASK]很开心'，模型预测[MASK]处为'真的'。"
+  },
+  {
+    "id": "kw_091",
+    "term": "Next Sentence Prediction",
+    "abbr": "NSP",
+    "phonetic": "/nekst ˈsentəns prɪˈdɪkʃən/",
+    "translation": "下一句预测",
+    "category": "训练任务",
+    "definition": "判断两个句子是否在原文中相邻的训练任务，用于学习句子级别的关系。",
+    "example": "BERT原始训练包含NSP任务，但后续研究发现其效果有限。"
+  },
+  {
+    "id": "kw_092",
+    "term": "Span Corruption",
+    "abbr": "",
+    "phonetic": "/spæn kəˈrʌpʃən/",
+    "translation": "跨度损坏",
+    "category": "训练任务",
+    "definition": "遮盖文本中的连续片段（span）而非单个token，让模型预测被遮盖的完整片段。",
+    "example": "T5模型使用span corruption作为预训练目标。"
+  },
+  {
+    "id": "kw_093",
+    "term": "Denoising",
+    "abbr": "",
+    "phonetic": "/diːˈnɔɪzɪŋ/",
+    "translation": "去噪",
+    "category": "训练任务",
+    "definition": "从含有噪声或损坏的输入中恢复原始数据的任务，是自编码器的核心训练目标。",
+    "example": "BART通过文本去噪进行序列到序列的预训练。"
+  },
+  {
+    "id": "kw_094",
+    "term": "Contrastive Learning",
+    "abbr": "",
+    "phonetic": "/kənˈtræstɪv ˈlɜːrnɪŋ/",
+    "translation": "对比学习",
+    "category": "表示学习",
+    "definition": "通过拉近相似样本、推远不相似样本的方式来学习表示的自监督学习方法。",
+    "example": "SimCLR和MoCo是图像对比学习的代表性方法。"
+  },
+  {
+    "id": "kw_095",
+    "term": "Prompt Tuning",
+    "abbr": "",
+    "phonetic": "/prɒmpt ˈtuːnɪŋ/",
+    "translation": "提示微调",
+    "category": "模型优化",
+    "definition": "只训练输入中的可学习提示嵌入，保持预训练模型参数冻结的参数高效微调方法。",
+    "example": "Prompt Tuning在T5模型上取得了与全量微调相近的效果。"
+  },
+  {
+    "id": "kw_096",
+    "term": "Prefix Tuning",
+    "abbr": "",
+    "phonetic": "/ˈpriːfɪks ˈtuːnɪŋ/",
+    "translation": "前缀微调",
+    "category": "模型优化",
+    "definition": "在每个Transformer层前添加可训练的前缀向量，实现参数高效微调的方法。",
+    "example": "Prefix Tuning在表格到文本生成任务上表现优异。"
+  },
+  {
+    "id": "kw_097",
+    "term": "Adapter",
+    "abbr": "",
+    "phonetic": "/əˈdæptər/",
+    "translation": "适配器",
+    "category": "模型优化",
+    "definition": "在Transformer层中插入小型可训练模块的参数高效微调方法，每个任务只训练少量参数。",
+    "example": "Adapter让同一个预训练模型可以通过切换适配器处理多个任务。"
+  },
+  {
+    "id": "kw_098",
+    "term": "Softmax",
+    "abbr": "",
+    "phonetic": "/ˈsɒftmæks/",
+    "translation": "Softmax函数",
+    "category": "核心技术",
+    "definition": "将任意实数向量转换为概率分布的函数，输出值在0到1之间且总和为1。",
+    "example": "Softmax常用于分类任务的最后一层，输出各类别的预测概率。"
+  },
+  {
+    "id": "kw_099",
+    "term": "Cross-Entropy Loss",
+    "abbr": "",
+    "phonetic": "/krɒs ˈentrəpi lɔːs/",
+    "translation": "交叉熵损失",
+    "category": "损失函数",
+    "definition": "衡量两个概率分布之间差异的损失函数，是分类任务中最常用的损失函数。",
+    "example": "语言模型训练使用交叉熵损失来衡量预测概率分布与真实分布的差距。"
+  },
+  {
+    "id": "kw_100",
+    "term": "Gradient Clipping",
+    "abbr": "",
+    "phonetic": "/ˈɡreɪdiənt ˈklɪpɪŋ/",
+    "translation": "梯度裁剪",
+    "category": "训练技巧",
+    "definition": "将梯度限制在阈值范围内的技术，防止训练过程中出现梯度爆炸问题。",
+    "example": "Transformer训练通常使用梯度裁剪阈值1.0。"
+  }
+]

@@ -1,0 +1,70 @@
+<view class="container">
+  <!-- 进度条 -->
+  <view class="progress-section">
+    <view class="progress-header">
+      <view class="streak">
+        <text class="streak-icon">🔥</text>
+        <text class="streak-text">连续 {{streakDays}} 天</text>
+      </view>
+      <text class="progress-text">{{todayProgress.learned}}/{{todayProgress.goal}}</text>
+    </view>
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{todayProgress.progress}}%;"></view>
+    </view>
+    <text class="progress-hint" wx:if="{{!isFinished}}">今日目标：学习 {{todayProgress.goal}} 张卡片</text>
+  </view>
+
+  <!-- 卡片区域 -->
+  <view class="card-section" wx:if="{{!isFinished && currentCard}}">
+    <flash-card
+      card="{{currentCard}}"
+      bind:swipe="onCardSwipe"
+      bind:detail="onCardDetail"
+      bind:audio="onCardAudio"
+    />
+
+    <!-- 底部按钮 -->
+    <view class="action-buttons">
+      <view class="action-btn forget" bindtap="onTapForget">
+        <text class="btn-icon">❌</text>
+        <text class="btn-label">不记得</text>
+      </view>
+      <view class="action-btn remember" bindtap="onTapRemember">
+        <text class="btn-icon">✅</text>
+        <text class="btn-label">记得</text>
+      </view>
+    </view>
+
+    <view class="card-counter">
+      <text>{{currentIndex + 1}} / {{dailyCards.length}}</text>
+    </view>
+  </view>
+
+  <!-- 完成状态 -->
+  <view class="finish-section" wx:if="{{isFinished}}">
+    <view class="finish-card">
+      <text class="finish-icon">🎉</text>
+      <text class="finish-title">今日学习完成</text>
+      <text class="finish-desc">已完成 {{dailyCards.length}} 张卡片的学习</text>
+      <view class="finish-stats">
+        <view class="stat-item">
+          <text class="stat-value">{{todayProgress.learned}}</text>
+          <text class="stat-label">今日学习</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-value">{{streakDays}}</text>
+          <text class="stat-label">连续天数</text>
+        </view>
+      </view>
+      <view class="finish-buttons">
+        <view class="btn-primary" bindtap="onTapRestart">再来一轮</view>
+        <view class="btn-outline mt-2" bindtap="onTapReview">去复习</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!isFinished && !currentCard}}">
+    <text>暂无卡片，请检查词库数据</text>
+  </view>
+</view>

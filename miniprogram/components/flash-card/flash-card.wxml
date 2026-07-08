@@ -1,0 +1,43 @@
+<view class="flash-card-wrapper">
+  <view class="flash-card"
+        style="transform: translate({{offsetX}}rpx, {{offsetY}}rpx) rotate({{rotate}}deg); opacity: {{opacity}};"
+        animation="{{animationData}}"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+        bindtap="onTapDetail">
+
+    <!-- 滑动提示 -->
+    <view class="swipe-hint left" style="opacity: {{swipeHint === '不记得' ? hintOpacity : 0}}">
+      <text class="hint-text">不记得</text>
+    </view>
+    <view class="swipe-hint right" style="opacity: {{swipeHint === '记得' ? hintOpacity : 0}}">
+      <text class="hint-text">记得</text>
+    </view>
+
+    <!-- 卡片内容 -->
+    <view class="card-header">
+      <text class="category-tag">{{card.category}}</text>
+      <view class="audio-btn" catchtap="onTapAudio">
+        <text class="audio-icon">🔊</text>
+      </view>
+    </view>
+
+    <view class="card-body">
+      <text class="term">{{card.term}}</text>
+      <text class="abbr" wx:if="{{card.abbr}}">{{card.abbr}}</text>
+      <view class="phonetic-row">
+        <text class="phonetic">{{card.phonetic}}</text>
+      </view>
+      <text class="translation">{{card.translation}}</text>
+    </view>
+
+    <view class="card-footer">
+      <text class="hint">点击查看详情</text>
+      <view class="swipe-guide">
+        <text class="guide-left">← 不记得</text>
+        <text class="guide-right">记得 →</text>
+      </view>
+    </view>
+  </view>
+</view>

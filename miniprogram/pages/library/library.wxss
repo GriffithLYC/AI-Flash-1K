@@ -1,0 +1,136 @@
+.search-bar {
+  margin-bottom: 20rpx;
+}
+
+.search-input {
+  background: var(--bg-card);
+  border-radius: 16rpx;
+  padding: 20rpx 30rpx;
+  color: var(--text-primary);
+  font-size: 28rpx;
+  border: 1rpx solid var(--border);
+}
+
+.search-placeholder {
+  color: var(--text-muted);
+}
+
+.category-bar {
+  margin-bottom: 20rpx;
+  white-space: nowrap;
+}
+
+.category-list {
+  display: inline-flex;
+  gap: 16rpx;
+  padding: 4rpx 0;
+}
+
+.category-item {
+  display: inline-flex;
+  padding: 12rpx 24rpx;
+  background: var(--bg-card);
+  border-radius: 12rpx;
+  border: 1rpx solid var(--border);
+  color: var(--text-secondary);
+  font-size: 26rpx;
+  transition: all 0.2s;
+}
+
+.category-item.active {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: var(--primary);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.library-stats {
+  margin-bottom: 20rpx;
+}
+
+.stats-text {
+  font-size: 24rpx;
+  color: var(--text-muted);
+}
+
+.keyword-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.keyword-item {
+  background: var(--bg-card);
+  border-radius: 20rpx;
+  padding: 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border: 1rpx solid var(--border);
+  transition: all 0.2s;
+}
+
+.keyword-item:active {
+  background: var(--bg-card-hover);
+}
+
+.keyword-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.keyword-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.keyword-term {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.keyword-abbr {
+  font-size: 22rpx;
+  color: var(--primary);
+  background: rgba(56, 189, 248, 0.1);
+  padding: 2rpx 8rpx;
+  border-radius: 6rpx;
+}
+
+.keyword-translation {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+}
+
+.keyword-status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8rpx;
+}
+
+.status-badge {
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  font-weight: 500;
+}
+
+.status-badge.learned {
+  background: rgba(74, 222, 128, 0.15);
+  color: var(--success);
+}
+
+.status-badge.reviewing {
+  background: rgba(251, 191, 36, 0.15);
+  color: var(--warning);
+}
+
+.keyword-category {
+  font-size: 22rpx;
+  color: var(--text-muted);
+}

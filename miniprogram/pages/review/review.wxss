@@ -1,0 +1,75 @@
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.list-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.list-count {
+  font-size: 26rpx;
+  color: var(--text-muted);
+}
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.card-item {
+  background: var(--bg-card);
+  border-radius: 20rpx;
+  padding: 28rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1rpx solid var(--border);
+  transition: all 0.2s;
+}
+
+.card-item:active {
+  background: var(--bg-card-hover);
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+  flex: 1;
+}
+
+.item-term {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.item-translation {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+}
+
+.item-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12rpx;
+}
+
+.remove-btn {
+  padding: 6rpx 16rpx;
+  background: rgba(248, 113, 113, 0.15);
+  color: var(--danger);
+  font-size: 22rpx;
+  border-radius: 8rpx;
+}
+
+.empty-btn {
+  margin-top: 40rpx;
+}

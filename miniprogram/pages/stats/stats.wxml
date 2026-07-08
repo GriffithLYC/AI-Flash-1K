@@ -1,0 +1,96 @@
+<view class="container" wx:if="{{progress}}">
+  <!-- 概览卡片 -->
+  <view class="stats-overview">
+    <view class="overview-item">
+      <text class="overview-value">{{progress.learned}}</text>
+      <text class="overview-label">已学习</text>
+    </view>
+    <view class="overview-item">
+      <text class="overview-value">{{progress.reviewing}}</text>
+      <text class="overview-label">复习中</text>
+    </view>
+    <view class="overview-item">
+      <text class="overview-value">{{progress.total}}</text>
+      <text class="overview-label">总词数</text>
+    </view>
+    <view class="overview-item">
+      <text class="overview-value">{{streakDays}}</text>
+      <text class="overview-label">连续天数</text>
+    </view>
+  </view>
+
+  <!-- 总体进度 -->
+  <view class="stats-card">
+    <text class="stats-card-title">📈 总体进度</text>
+    <view class="progress-circle-wrapper">
+      <view class="progress-info">
+        <text class="progress-percent">{{progress.progressPercent}}%</text>
+        <text class="progress-detail">{{progress.learned}}/{{progress.total}}</text>
+      </view>
+    </view>
+    <view class="progress-bar-large">
+      <view class="progress-fill-large" style="width: {{progress.progressPercent}}%;"></view>
+    </view>
+  </view>
+
+  <!-- 今日进度 -->
+  <view class="stats-card" wx:if="{{todayProgress}}">
+    <text class="stats-card-title">📅 今日进度</text>
+    <view class="today-stats">
+      <view class="today-item">
+        <text class="today-value">{{todayProgress.learned}}</text>
+        <text class="today-label">今日学习</text>
+      </view>
+      <view class="today-item">
+        <text class="today-value">{{todayProgress.goal}}</text>
+        <text class="today-label">目标</text>
+      </view>
+      <view class="today-item">
+        <text class="today-value">{{todayProgress.reviewed}}</text>
+        <text class="today-label">今日复习</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 近7天学习 -->
+  <view class="stats-card">
+    <text class="stats-card-title">📊 近7天学习</text>
+    <view class="weekly-chart">
+      <view class="chart-day" wx:for="{{weeklyData}}" wx:key="date">
+        <view class="bar-wrapper">
+          <view class="bar" style="height: {{item.total > 0 ? Math.min(100, item.total * 10) : 4}}rpx;"></view>
+        </view>
+        <text class="day-label">{{item.day}}</text>
+        <text class="day-value">{{item.total}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 历史统计 -->
+  <view class="stats-card">
+    <text class="stats-card-title">🏆 历史统计</text>
+    <view class="history-list">
+      <view class="history-item">
+        <text class="history-label">累计学习</text>
+        <text class="history-value">{{stats.totalLearned}} 张</text>
+      </view>
+      <view class="history-item">
+        <text class="history-label">累计复习</text>
+        <text class="history-value">{{stats.totalReviewed}} 张</text>
+      </view>
+      <view class="history-item">
+        <text class="history-label">掌握次数</text>
+        <text class="history-value">{{stats.masteredCount}} 次</text>
+      </view>
+      <view class="history-item">
+        <text class="history-label">忘记次数</text>
+        <text class="history-value">{{stats.forgetCount}} 次</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 清除数据 -->
+  <view class="btn-outline" style="margin-top: 20rpx; margin-bottom: 40rpx;" bindtap="onTapClear">
+    清除所有学习记录
+  </view>
+</view>

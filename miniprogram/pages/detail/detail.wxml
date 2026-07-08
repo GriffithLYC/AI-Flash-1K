@@ -1,0 +1,70 @@
+<view class="container" wx:if="{{card}}">
+  <!-- 卡片头部 -->
+  <view class="detail-header">
+    <view class="header-top">
+      <text class="category-tag">{{card.category}}</text>
+      <view class="status-badges">
+        <text class="tag tag-success" wx:if="{{isLearned}}">已学习</text>
+        <text class="tag tag-warning" wx:if="{{isReviewing}}">复习中</text>
+      </view>
+    </view>
+    <view class="title-row">
+      <text class="detail-term">{{card.term}}</text>
+      <view class="audio-btn" bindtap="onTapAudio">
+        <text class="audio-icon">🔊</text>
+      </view>
+    </view>
+    <text class="detail-abbr" wx:if="{{card.abbr}}">{{card.abbr}}</text>
+    <text class="detail-phonetic">{{card.phonetic}}</text>
+    <text class="detail-translation">{{card.translation}}</text>
+  </view>
+
+  <!-- 定义 -->
+  <view class="detail-section">
+    <text class="section-title">📖 定义</text>
+    <text class="section-content">{{card.definition}}</text>
+  </view>
+
+  <!-- 示例 -->
+  <view class="detail-section">
+    <text class="section-title">💡 示例</text>
+    <view class="example-box">
+      <text class="section-content">{{card.example}}</text>
+    </view>
+  </view>
+
+  <!-- 学习记录 -->
+  <view class="detail-section" wx:if="{{record}}">
+    <text class="section-title">📊 学习记录</text>
+    <view class="record-grid">
+      <view class="record-item">
+        <text class="record-label">掌握等级</text>
+        <text class="record-value">Lv.{{record.level || 0}}</text>
+      </view>
+      <view class="record-item">
+        <text class="record-label">上次复习</text>
+        <text class="record-value">{{record.updatedAt ? '已复习' : '未复习'}}</text>
+      </view>
+      <view class="record-item" wx:if="{{record.nextReview}}">
+        <text class="record-label">下次复习</text>
+        <text class="record-value">{{record.nextReview}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="detail-actions">
+    <view class="btn-primary" bindtap="onTapMarkLearned" wx:if="{{!isLearned}}">
+      标记为已学习
+    </view>
+    <view class="btn-outline" bindtap="onTapMarkLearned" wx:else>
+      取消已学习
+    </view>
+    <view class="btn-outline mt-2" bindtap="onTapAddReview" wx:if="{{!isReviewing}}">
+      加入复习列表
+    </view>
+    <view class="btn-outline mt-2" bindtap="onTapAddReview" wx:else>
+      移出复习列表
+    </view>
+  </view>
+</view>

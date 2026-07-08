@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "flash-card": "/components/flash-card/flash-card"
+  },
+  "navigationBarTitleText": "每日抽卡"
+}

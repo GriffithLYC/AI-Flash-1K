@@ -1,0 +1,57 @@
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input class="search-input"
+           type="text"
+           placeholder="搜索关键词..."
+           placeholder-class="search-placeholder"
+           value="{{searchQuery}}"
+           bindinput="onSearchInput"
+           confirm-type="search"/>
+  </view>
+
+  <!-- 分类标签 -->
+  <scroll-view class="category-bar" scroll-x enhanced show-scrollbar="{{false}}">
+    <view class="category-list">
+      <view class="category-item {{activeCategory === item ? 'active' : ''}}"
+            wx:for="{{categories}}"
+            wx:key="*this"
+            data-category="{{item}}"
+            bindtap="onTapCategory">
+        <text>{{item}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 统计信息 -->
+  <view class="library-stats">
+    <text class="stats-text">共 {{filteredKeywords.length}} 个关键词</text>
+  </view>
+
+  <!-- 关键词列表 -->
+  <view class="keyword-list" wx:if="{{filteredKeywords.length > 0}}">
+    <view class="keyword-item"
+          wx:for="{{filteredKeywords}}"
+          wx:key="id"
+          data-id="{{item.id}}"
+          bindtap="onTapCard">
+      <view class="keyword-main">
+        <view class="keyword-row">
+          <text class="keyword-term">{{item.term}}</text>
+          <text class="keyword-abbr" wx:if="{{item.abbr}}">{{item.abbr}}</text>
+        </view>
+        <text class="keyword-translation">{{item.translation}}</text>
+      </view>
+      <view class="keyword-status">
+        <text class="status-badge learned" wx:if="{{learnedIds.includes(item.id)}}">已学</text>
+        <text class="status-badge reviewing" wx:elif="{{reviewIds.includes(item.id)}}">复习</text>
+        <text class="keyword-category">{{item.category}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{filteredKeywords.length === 0}}">
+    <text class="empty-icon">🔍</text>
+    <text>未找到匹配的关键词</text>
+  </view>
+</view>

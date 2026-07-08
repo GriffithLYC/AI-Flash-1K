@@ -1,0 +1,183 @@
+.progress-section {
+  margin-bottom: 30rpx;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.streak {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.streak-icon {
+  font-size: 32rpx;
+}
+
+.streak-text {
+  font-size: 26rpx;
+  color: var(--warning);
+  font-weight: 600;
+}
+
+.progress-text {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 16rpx;
+  background: rgba(56, 189, 248, 0.15);
+  border-radius: 8rpx;
+  overflow: hidden;
+  margin-bottom: 12rpx;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border-radius: 8rpx;
+  transition: width 0.4s ease;
+}
+
+.progress-hint {
+  font-size: 24rpx;
+  color: var(--text-muted);
+}
+
+.card-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 40rpx;
+  margin-top: 30rpx;
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+  padding: 20rpx 50rpx;
+  border-radius: 20rpx;
+  background: var(--bg-card);
+  border: 2rpx solid var(--border);
+  transition: all 0.2s;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.forget {
+  border-color: rgba(248, 113, 113, 0.3);
+}
+
+.action-btn.remember {
+  border-color: rgba(74, 222, 128, 0.3);
+}
+
+.btn-icon {
+  font-size: 40rpx;
+}
+
+.btn-label {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.action-btn.forget .btn-label {
+  color: var(--danger);
+}
+
+.action-btn.remember .btn-label {
+  color: var(--success);
+}
+
+.card-counter {
+  text-align: center;
+  margin-top: 20rpx;
+  font-size: 24rpx;
+  color: var(--text-muted);
+}
+
+.finish-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.finish-card {
+  background: var(--bg-card);
+  border-radius: 32rpx;
+  padding: 60rpx 50rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  box-shadow: 0 8rpx 40rpx rgba(0, 0, 0, 0.3);
+  border: 2rpx solid rgba(56, 189, 248, 0.15);
+}
+
+.finish-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.finish-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12rpx;
+}
+
+.finish-desc {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  margin-bottom: 40rpx;
+}
+
+.finish-stats {
+  display: flex;
+  gap: 60rpx;
+  margin-bottom: 50rpx;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.stat-value {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: var(--text-muted);
+}
+
+.finish-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
