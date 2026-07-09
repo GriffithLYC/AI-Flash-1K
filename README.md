@@ -1,4 +1,4 @@
-<h1 align="center">AI Learning Cards</h1>
+﻿<h1 align="center">AI Learning Cards</h1>
 
 <p align="center">
   <b>AI大模型学习卡片</b> — 碎片化记忆工具，每天5分钟掌握一个AI核心概念
@@ -8,8 +8,7 @@
   <a href="#"><img src="https://img.shields.io/badge/platform-Web%20%2F%20PWA-5A0FC8?style=flat-square&logo=google-chrome&logoColor=white" alt="Platform"></a>
   <a href="#"><img src="https://img.shields.io/badge/language-JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="Language"></a>
   <a href="#"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="License"></a>
-  <a href="#"><img src="https://img.shields.io/badge/keywords-2000%2B-orange?style=flat-square" alt="Keywords"></a>
-</p>
+  <a href="#"><img src="https://img.shields.io/badge/keywords-2000%2B-orange?style=flat-square" alt="Keywords"></a></p>
 
 <p align="center">
   <a href="#features">功能特色</a> •
@@ -18,8 +17,7 @@
   <a href="#quickstart">快速开始</a> •
   <a href="#architecture">项目架构</a> •
   <a href="#data">词库数据</a> •
-  <a href="#roadmap">迭代计划</a> •
-  <a href="#contribute">参与贡献</a>
+  <a href="#roadmap">迭代计划</a> •  <a href="#contribute">参与贡献</a>
 </p>
 
 ---
@@ -75,43 +73,6 @@ AI大模型技术以极快的速度迭代，新概念、新论文、新术语几
 | **大模型能力** | 无 | 接入智谱GLM-4-Flash / 阿里Qwen |
 | **核心升级** | — | 知识自动更新、视频资源匹配、智能翻译 |
 
-### 核心设计理念
-
-**像刷短视频一样学习AI概念。**
-
-我们将复杂的技术概念拆解为一张张卡片，每张卡片包含：英文术语 + 音标（支持发音播放）+ 英文定义 + 中文定义 + 应用案例。用户每天只需花5分钟浏览5张卡片，通过左右滑动标记掌握状态，系统会根据间隔重复算法在合适的时间推送需要复习的内容。
-
-**三大设计原则：**
-
-1. **最小阻力原则** — 打开即用，无需注册，无需选择，每日自动推送
-2. **即时反馈原则** — 每一次滑动都立即改变卡片状态，学习进度可视化
-3. **双语对照原则** — 所有术语保持英文原文，配合通俗中文解释，降低语言门槛
-
----
-
-## <a name="features"></a> 功能特色
-
-| 功能 | 描述 | 阶段 |
-|------|------|------|
-| **每日抽卡** | 每日自动推送5张AI关键词卡片，支持左右滑动手势交互 | 一期 |
-| **发音播放** | 音标旁小喇叭图标，点击播放术语英文发音（TTS合成） | 一期 |
-| **滑动动效** | 左滑飞出（红色遮罩）/ 右滑飞出（绿色遮罩），弹簧复位动画 | 一期 |
-| **双语卡片** | 英文术语 + 英文定义 + 中文定义 + 应用案例，专有名词保持原文 | 一期 |
-| **智能复习** | 基于间隔重复算法，左滑"不记得"的卡片自动进入复习队列 | 一期 |
-| **词库浏览** | 支持按10个分类筛选、按难度筛选、关键词搜索 | 一期 |
-| **学习统计** | 连续学习天数、掌握进度、学习热力图、分类掌握度 | 一期 |
-| **离线可用** | 本地缓存20张卡片，无网络时仍可正常学习 | 一期 |
-| **自动更新知识点** | 大模型定期从论文/博客提取前沿知识点，经人工审核后入库 | 二期 |
-| **视频资源匹配** | 自动匹配B站/抖音/GitHub相关视频，详情页一键跳转延伸学习 | 二期 |
-| **知识点翻译** | 大模型实时中英双向翻译，翻译结果一译永存（缓存策略） | 二期 |
-| **统一模型管理** | 平台统一配置API，主备双模型自动切换，用户零感知 | 二期 |
-
----
-
-## <a name="phase2"></a> 二期规划
-
-二期将接入大模型能力（智谱GLM-4-Flash为主、阿里Qwen为备用），实现知识点的自动更新与扩容、视频资源的智能匹配、以及中英双向翻译功能。所有大模型能力对用户完全透明，用户无需自行配置任何API Key，前期采用国内免费开源模型，实现零成本运行。二期目标将词库从1000词扩容至2000词，并搭建轻量级后端服务支撑API调用与数据缓存。
-
 ---
 
 ## <a name="quickstart"></a> 快速开始
@@ -126,7 +87,6 @@ AI大模型技术以极快的速度迭代，新概念、新论文、新术语几
 直接双击 `index.html` 文件即可在浏览器中打开。
 
 或使用本地服务器：
-
 ```bash
 # 克隆项目
 git clone https://github.com/yourusername/ai-learning-cards.git
@@ -139,7 +99,6 @@ cd pwa
 # 或使用任意本地静态服务器
 python -m http.server 8000
 ```
-
 ---
 
 ## <a name="architecture"></a> 项目架构
@@ -159,8 +118,7 @@ ai-learning-cards/
 └── miniprogram/             # 微信小程序源码（二期）
     ├── app.js / app.json / app.wxss
     ├── components/
-    │   └── flash-card/
-    ├── pages/
+    │   └── flash-card/    ├── pages/
     │   ├── index/           # 每日抽卡首页
     │   ├── detail/          # 卡片详情
     │   ├── review/          # 待复习列表
@@ -172,8 +130,7 @@ ai-learning-cards/
     │   ├── storage.js
     │   └── draw.js
     └── data/
-        └── keywords.js
-```
+        └── keywords.js```
 
 ### 技术栈
 
@@ -182,13 +139,11 @@ ai-learning-cards/
 - **动画**：CSS3 Transform + Transition
 - **音频**：Web Speech API / HTML5 Audio（TTS发音）
 - **离线**：Service Worker + Cache API
-
 ---
 
 ## <a name="data"></a> 词库数据
 
 首批包含 **100个AI大模型双语关键词**，覆盖10个分类。产品规划分阶段扩容至 **2000+ 词条**：
-
 | 分类 | 数量 | 示例词条 |
 |------|------|----------|
 | 基础概念 | 10 | LLM, Prompt, Token, Embedding, Attention |
@@ -210,28 +165,6 @@ ai-learning-cards/
 | 一期v1.2 | 500词 | 人工编辑 + 社区贡献 | 规划中 |
 | 一期v1.3 | 1000词 | 人工编辑 + 社区贡献 | 规划中 |
 | 二期v2.1 | 2000词 | 人工 + 大模型自动生成 | 待开发 |
-
-每个词条包含：英文术语、音标、英文定义、中文定义、应用案例（双语）、分类标签、难度等级。
-
-数据文件：`assets/ai_keywords_100.json`
-
----
-
-## <a name="roadmap"></a> 迭代计划
-
-### 一期：轻量化学习工具（PWA离线网页，无大模型能力）
-
-- [x] **一期 v1.0 MVP** — PWA离线网页：每日抽卡、滑动交互、卡片详情、待复习/已学习、词库浏览、100词
-- [ ] **一期 v1.1** — 学习统计（热力图、雷达图、趋势图）、收藏夹、学习提醒推送
-- [ ] **一期 v1.2** — 词库扩展至500词、难度分级筛选、卡片分享（生成图片）
-- [ ] **一期 v1.3** — 词库扩展至1000词、微信登录与云同步、智能复习算法（遗忘曲线）
-
-### 二期：接入大模型能力（微信小程序）
-
-- [ ] **二期 v2.0** — 微信小程序：服务端搭建、接入智谱GLM-4-Flash（主模型）+ 阿里Qwen（备用）、统一模型管理模块
-- [ ] **二期 v2.1** — 自动更新知识点（大模型 + 人工审核）、翻译功能上线、词库扩容至2000词
-- [ ] **二期 v2.2** — 自动匹配B站/抖音/GitHub视频资源、详情页"相关视频"入口、平台导流
-- [ ] **二期 v2.3** — 翻译质量优化、视频匹配精准度提升、缓存策略优化、运营后台完善
 
 ---
 
@@ -263,3 +196,4 @@ ai-learning-cards/
 <p align="center">
   Made with curiosity for AI learners
 </p>
+

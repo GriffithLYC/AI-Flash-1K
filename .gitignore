@@ -21,6 +21,7 @@ yarn-error.log*
 # Build output
 dist/
 build/
+<<<<<<< HEAD
 
 # Android / Gradle
 pwa/android/build/
@@ -33,3 +34,5 @@ local.properties
 # Capacitor
 pwa/node_modules/
 pwa/www/
+=======
+>>>>>>> 8b682e5149ea31a0d13892ec608ba40367068892
