@@ -21,3 +21,15 @@ yarn-error.log*
 # Build output
 dist/
 build/
+
+# Android / Gradle
+pwa/android/build/
+pwa/android/.gradle/
+pwa/android/app/build/
+pwa/android/app/.gradle/
+*.iml
+local.properties
+
+# Capacitor
+pwa/node_modules/
+pwa/www/
